@@ -21,7 +21,10 @@ export const formSchema = z.object({
 });
 
 export const loginFormSchema = z.object({
-	username: z.string(),
+	email: z
+		.string()
+		.min(1, { message: "Email is required." })
+		.email({ message: "Please enter a valid email address." }),
 	password: z
 		.string()
 		.min(7, { message: "Password must be at least 7 characters long." }),
@@ -58,7 +61,7 @@ export const registerFormSchema = z
 	})
 	.refine((data) => data.password === data.confirm_password, {
 		message: "Passwords don't match",
-		path: ["confirm"],
+		path: ["password"],
 	});
 
 export const editUserInfoSchema = z.object({

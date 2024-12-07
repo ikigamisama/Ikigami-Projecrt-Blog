@@ -19,8 +19,13 @@ import {
 import { jetbrainsMono, roboto_mono } from "@/lib/font";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
+import { useToast } from "@/hooks/use-toast";
+import { handleRegister } from "@/app/register/actions";
+import { useRouter } from "next/navigation";
 
 const RegisterForm = () => {
+	const router = useRouter();
+	const { toast } = useToast();
 	const [showPassword, setShowPassword] = useState(false);
 	const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 	const form = useForm<z.infer<typeof registerFormSchema>>({
@@ -35,9 +40,25 @@ const RegisterForm = () => {
 		},
 	});
 
-	function onSubmit(values: z.infer<typeof registerFormSchema>) {
-		console.log(values);
+	async function onSubmit(values: z.infer<typeof registerFormSchema>) {
+		const result = await handleRegister(values);
+
+		if (result?.error) {
+			toast({
+				title: "Register Failed",
+				description: result.error,
+				variant: "destructive",
+			});
+		} else {
+			toast({
+				title: "Register Successful",
+				description: "Welcome!",
+			});
+
+			router.push("/login");
+		}
 	}
+
 	return (
 		<Form {...form}>
 			<form onSubmit={form.handleSubmit(onSubmit)} className='startup-form'>

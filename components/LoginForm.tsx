@@ -19,32 +19,48 @@ import {
 import { jetbrainsMono, roboto_mono } from "@/lib/font";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
+import { useToast } from "@/hooks/use-toast";
+import { handleLogin } from "@/app/login/actions";
 
 const LoginForm = () => {
+	const { toast } = useToast();
 	const [showPassword, setShowPassword] = useState(false);
 	const form = useForm<z.infer<typeof loginFormSchema>>({
 		resolver: zodResolver(loginFormSchema),
 		defaultValues: {
-			username: "",
+			email: "",
 			password: "",
 		},
 	});
 
-	function onSubmit(values: z.infer<typeof loginFormSchema>) {
-		console.log(values);
+	async function onSubmit(values: z.infer<typeof loginFormSchema>) {
+		const result = await handleLogin(values);
+
+		if (result?.error) {
+			toast({
+				title: "Login Failed",
+				description: result.error,
+				variant: "destructive",
+			});
+		} else {
+			toast({
+				title: "Login Successful",
+				description: "You have logged in successfully!",
+			});
+		}
 	}
 	return (
 		<Form {...form}>
 			<form onSubmit={form.handleSubmit(onSubmit)} className='startup-form'>
 				<FormField
 					control={form.control}
-					name='username'
+					name='email'
 					render={({ field }) => (
 						<FormItem>
 							<FormLabel
 								htmlFor='username'
 								className={`startup-form_label ${jetbrainsMono.className}`}>
-								Username
+								Email
 							</FormLabel>
 							<FormControl>
 								<Input

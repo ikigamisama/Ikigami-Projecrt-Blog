@@ -17,7 +17,20 @@ import { FaPencilAlt, FaEdit } from "react-icons/fa";
 import { RxAvatar } from "react-icons/rx";
 import profile_icon from "@/assets/profile_icon.png";
 
-const UserOptions = () => {
+import type { User } from "@supabase/supabase-js";
+import { handleLogout } from "@/app/login/actions";
+import { useToast } from "@/hooks/use-toast";
+
+const UserOptions = ({ user }: { user: User | null }) => {
+	const { toast } = useToast();
+	const onLogOut = async () => {
+		await handleLogout();
+
+		toast({
+			title: "Successful Logout",
+			description: "Hoping to see you soon!!",
+		});
+	};
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
@@ -32,11 +45,11 @@ const UserOptions = () => {
 					<div className='flex flex-col justify-start gap-2'>
 						<p
 							className={`font-bold text-[22px] text-black ${jetbrainsMono.className}`}>
-							Ikigami
+							{user?.user_metadata.first_name} {user?.user_metadata.last_name}
 						</p>
 						<p
 							className={`font-bold text-[14px] !text-black-300 ${jetbrainsMono.className}`}>
-							@ikigamidevs
+							@{user?.user_metadata.username}
 						</p>
 					</div>
 				</DropdownMenuItem>
@@ -72,6 +85,7 @@ const UserOptions = () => {
 				<DropdownMenuSeparator />
 				<DropdownMenuItem asChild>
 					<Button
+						onClick={onLogOut}
 						className={`bg-primary hover:bg-primary text-white block w-full text-center ${workSans.className}`}>
 						Logout
 					</Button>

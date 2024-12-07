@@ -4,12 +4,13 @@ import { assets } from "@/assets/assets";
 import { Button } from "./ui/button";
 import { roboto_mono } from "@/lib/font";
 
+import type { User } from "@supabase/supabase-js";
 import ThemeSwitcher from "./ThemeSwitcher";
 import Link from "next/link";
 
 import UserOptions from "./UserOptions";
 
-const Header = () => {
+const Header = ({ data }: { data: User | null }) => {
 	return (
 		<header className='header'>
 			<div className='flex justify-between items-center'>
@@ -23,15 +24,19 @@ const Header = () => {
 					/>
 				</Link>
 				<div className='flex flex-row items-center'>
-					<UserOptions />
-					<Button
-						className={`header-btn ${roboto_mono.className}`}
-						variant='outline'
-						asChild>
-						<Link href='/login'>
-							Get Started <Image src={assets.arrow} alt='' />
-						</Link>
-					</Button>
+					{data ? (
+						<UserOptions user={data} />
+					) : (
+						<Button
+							className={`header-btn ${roboto_mono.className}`}
+							variant='outline'
+							asChild>
+							<Link href='/login'>
+								Get Started <Image src={assets.arrow} alt='' />
+							</Link>
+						</Button>
+					)}
+
 					<ThemeSwitcher />
 				</div>
 			</div>

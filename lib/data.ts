@@ -60,3 +60,5 @@ export const categoryOption: Option[] = [
 		label: "Resource",
 	},
 ];
+
+export const pageWithAuth: string[] = ["/login", "/register"];

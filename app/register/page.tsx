@@ -2,7 +2,7 @@ import RegisterForm from "@/components/RegisterForm";
 import { jetbrainsMono } from "@/lib/font";
 import Link from "next/link";
 
-const Register = () => {
+const Register = async () => {
 	return (
 		<section className='flex flex-col my-16 h-full w-full items-center justify-center px-4'>
 			<div className='login-card w-[500px]'>

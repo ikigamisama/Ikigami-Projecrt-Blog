@@ -2,7 +2,7 @@ import LoginForm from "@/components/LoginForm";
 import { jetbrainsMono } from "@/lib/font";
 import Link from "next/link";
 
-const Login = () => {
+const Login = async () => {
 	return (
 		<section className='flex flex-col h-[calc(90vh-30px)] w-full items-center justify-center px-4'>
 			<div className='login-card w-[500px]'>
