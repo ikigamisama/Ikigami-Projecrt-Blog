@@ -1,33 +1,37 @@
 import Image from "next/image";
-import blog_pic_2 from "@/assets/blog_pic_2.png";
 import profile_icon from "@/assets/profile_icon.png";
 import Link from "next/link";
 import { jetbrainsMono } from "@/lib/font";
+import { createClient } from "@/utils/supabase/server";
+import { cookies } from "next/headers";
 import EditPostButton from "@/components/EditPostButton";
+import { convertToTitle } from "@/lib/string";
+import { getPostData } from "@/lib/models/data";
+import dayjs from "dayjs";
 
-const Posts = () => {
-	const readableDate = new Date(Date.now()).toLocaleDateString("en-US", {
-		year: "numeric",
-		month: "long",
-		day: "numeric",
-	});
+const Posts = async ({ params }: { params: { title: string } }) => {
+	const { title } = await params;
+	const cookieStore = await cookies();
+	const supabase = createClient(cookieStore);
+
+	const data = await getPostData(convertToTitle(title), supabase);
+
+	const dateOnly = dayjs(data.created_at).format("MMMM DD, YYYY");
+
 	return (
 		<>
 			<section className='post_header_container min-h-[450px] mb-8'>
-				<p className='tag'>{readableDate}</p>
+				<p className='tag'>{dateOnly}</p>
 
-				<h1 className='heading'>
-					A detailed step by step guide to manage your lifestyle
-				</h1>
-				<p className='sub-heading !max-w-5xl'>
-					Lorem Ipsum is simply dummy text of the printing and typesetting
-					industry. Lorem Ipsum has been the..
-				</p>
+				<h1 className='heading'>{data.title}</h1>
+				<p className='sub-heading !max-w-5xl'>{data.description}</p>
 			</section>
 
 			<section className='section-container'>
 				<Image
-					src={blog_pic_2}
+					src={data.image_link}
+					width={1000}
+					height={100}
 					alt='thumbnail'
 					className='w-full h-auto rounded-xl'
 				/>

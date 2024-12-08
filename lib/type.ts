@@ -1,5 +1,6 @@
 import type { StaticImageData } from "next/image";
 import type { IconType } from "react-icons";
+import { string } from "zod";
 
 export type LoginData = { email: string; password: string };
 
@@ -34,6 +35,20 @@ export type PostBlogData = {
 	content: string;
 };
 
+export type PostsListData = {
+	id: string;
+	created_at: string;
+	title: string;
+	description: string;
+	category: string;
+	image_link: string;
+	content: string;
+	author_id: string;
+};
+
+export interface PostListDataInterface {
+	list: PostsListData[] | null;
+}
 export interface EditPostButtonProps {
 	blog_id: string;
 }

@@ -1,7 +1,14 @@
 import BlogList from "@/components/BlogList";
+import { createClient } from "@/utils/supabase/server";
+import { cookies } from "next/headers";
 import { roboto_mono, space_mono } from "@/lib/font";
 
-export default function Home() {
+export default async function Home() {
+	const cookieStore = await cookies();
+	const supabase = createClient(cookieStore);
+
+	const { data } = await supabase.from("Posts").select();
+
 	return (
 		<>
 			<div className='container mx-auto w-full'>
@@ -20,7 +27,7 @@ export default function Home() {
 					</p>
 				</div>
 
-				<BlogList />
+				<BlogList list={data} />
 			</div>
 		</>
 	);

@@ -6,7 +6,7 @@ import { cookies } from "next/headers";
 
 export const handleCreatePostBlog = async (registerData: PostBlogData) => {
 	try {
-		const cookieStore = cookies();
+		const cookieStore = await cookies();
 		const supabase = createClient(cookieStore);
 
 		const {

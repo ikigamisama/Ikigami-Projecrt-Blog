@@ -2,9 +2,9 @@ import { category } from "@/lib/data";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { roboto_mono } from "@/lib/font";
 import BlogItem from "./BlogItem";
-import { blog_data } from "@/assets/assets";
+import { PostListDataInterface } from "@/lib/type";
 
-const BlogList = () => {
+const BlogList = ({ list }: PostListDataInterface) => {
 	return (
 		<Tabs
 			defaultValue='all'
@@ -21,9 +21,11 @@ const BlogList = () => {
 			</TabsList>
 			<TabsContent value='all'>
 				<ul className='mt-7 card_grid'>
-					{blog_data.map((data, i) => (
-						<BlogItem info={data} key={i} />
-					))}
+					{!list ? (
+						<p>Loading . . .</p>
+					) : (
+						list.map((data, i) => <BlogItem info={data} key={i} />)
+					)}
 				</ul>
 			</TabsContent>
 			<TabsContent value='data-analysis'>Data Analysis List</TabsContent>

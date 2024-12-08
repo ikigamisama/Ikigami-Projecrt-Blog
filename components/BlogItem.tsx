@@ -2,26 +2,25 @@ import { EyeIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "./ui/button";
-import { BlogData } from "@/lib/type";
+import { PostsListData } from "@/lib/type";
 import { jetbrainsMono, roboto_mono, space_mono } from "@/lib/font";
+import dayjs from "dayjs";
+import profile_icon from "@/assets/profile_icon.png";
+import { convertToSlug } from "@/lib/string";
 
-const BlogItem = ({ info }: { info: BlogData }) => {
-	const readableDate = new Date(info.date).toLocaleDateString("en-US", {
-		year: "numeric",
-		month: "long",
-		day: "numeric",
-	});
+const BlogItem = ({ info }: { info: PostsListData }) => {
+	const dateOnly = dayjs(info.created_at).format("MMMM DD, YYYY");
 	return (
 		<li className='startup-card group'>
 			<div className='flex-between'>
 				<p className={`startup-card_date ${roboto_mono.className}`}>
-					{readableDate}
+					{dateOnly}
 				</p>
 				<div className='flex gap-1.5'>
 					<EyeIcon className='size-6 text-primary' />
 					<span
 						className={`text-[16px] text-black font-bold ${roboto_mono.className}`}>
-						10
+						0
 					</span>
 				</div>
 			</div>
@@ -31,10 +30,10 @@ const BlogItem = ({ info }: { info: BlogData }) => {
 					<Link href={``}>
 						<p
 							className={`text-16-medium line-clamp-1 ${jetbrainsMono.className}`}>
-							{info.author}
+							{}
 						</p>
 					</Link>
-					<Link href={`posts/123`}>
+					<Link href={`posts/${convertToSlug(info.title)}`}>
 						<h3
 							className={`text-26-semibold line-clamp-1  ${roboto_mono.className}`}>
 							{info.title}
@@ -42,7 +41,7 @@ const BlogItem = ({ info }: { info: BlogData }) => {
 					</Link>
 				</div>
 				<Image
-					src={info.author_img}
+					src={profile_icon}
 					alt={``}
 					width={48}
 					height={48}
@@ -55,19 +54,17 @@ const BlogItem = ({ info }: { info: BlogData }) => {
 			</p>
 
 			<img
-				src={info.image.src}
+				src={info.image_link}
 				alt='placeholder'
 				className='startup-card_img'
 			/>
 
 			<div className='flex-between gap-3 mt-5'>
-				<Link href={``}>
-					<p className={`text-16-medium ${space_mono.className}`}>
-						{info.category}
-					</p>
-				</Link>
+				<p className={`text-16-medium ${space_mono.className}`}>
+					{info.category}
+				</p>
 				<Button className={`startup-card_btn ${space_mono.className}`} asChild>
-					<Link href={``}>
+					<Link href={`posts/${convertToSlug(info.title)}`}>
 						<b>Details</b>
 					</Link>
 				</Button>

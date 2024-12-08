@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 
 export const handleLogin = async (loginData: LoginData) => {
 	try {
-		const cookieStore = cookies();
+		const cookieStore = await cookies();
 		const supabase = createClient(cookieStore);
 
 		const { data, error } = await supabase.auth.signInWithPassword({
@@ -28,7 +28,7 @@ export const handleLogin = async (loginData: LoginData) => {
 
 export const handleLogout = async () => {
 	try {
-		const cookieStore = cookies();
+		const cookieStore = await cookies();
 		const supabase = createClient(cookieStore);
 
 		const {
