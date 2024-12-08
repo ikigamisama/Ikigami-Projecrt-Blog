@@ -8,10 +8,10 @@ import { v4 as uuidv4 } from "uuid";
 export default async function PostLayout({
 	children,
 	params,
-}: Readonly<{
+}: {
 	children: React.ReactNode;
 	params: { title: string };
-}>) {
+}) {
 	const { title } = await params;
 	const cookieStore = await cookies();
 	const supabase = createClient(cookieStore);
