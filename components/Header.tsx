@@ -9,8 +9,15 @@ import ThemeSwitcher from "./ThemeSwitcher";
 import Link from "next/link";
 
 import UserOptions from "./UserOptions";
+import { FaPencilAlt } from "react-icons/fa";
 
-const Header = ({ data }: { data: User | null }) => {
+const Header = ({
+	user,
+	author,
+}: {
+	user: User | null;
+	author: any | null;
+}) => {
 	return (
 		<header className='header'>
 			<div className='flex justify-between items-center'>
@@ -23,9 +30,21 @@ const Header = ({ data }: { data: User | null }) => {
 						priority
 					/>
 				</Link>
+
 				<div className='flex flex-row items-center'>
-					{data ? (
-						<UserOptions user={data} />
+					{user ? (
+						<>
+							<Button
+								className={`header-btn mr-4 ${roboto_mono.className}`}
+								variant='outline'
+								asChild>
+								<Link href='/create/posts/'>
+									<FaPencilAlt />
+									Create Post
+								</Link>
+							</Button>
+							<UserOptions author={author} />
+						</>
 					) : (
 						<Button
 							className={`header-btn ${roboto_mono.className}`}

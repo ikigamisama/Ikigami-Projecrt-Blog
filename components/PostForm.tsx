@@ -23,9 +23,17 @@ import MultipleSelector from "./ui/multiple-selector";
 import { categoryOption } from "@/lib/data";
 import { jetbrainsMono, roboto_mono } from "@/lib/font";
 import { useTheme } from "next-themes";
+import { useState } from "react";
+import { handleCreatePostBlog } from "@/app/posts/actions";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/hooks/use-toast";
+import { convertToSlug } from "@/lib/string";
 
 const PostForm = () => {
+	const router = useRouter();
 	const { theme } = useTheme();
+	const { toast } = useToast();
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -36,8 +44,26 @@ const PostForm = () => {
 			content: "",
 		},
 	});
-	function onSubmit(values: z.infer<typeof formSchema>) {
-		console.log(values);
+	async function onSubmit(values: z.infer<typeof formSchema>) {
+		setIsLoading(true);
+		const result = await handleCreatePostBlog(values);
+
+		if (result?.error) {
+			toast({
+				title: "Login Failed",
+				description: result.message,
+				variant: "destructive",
+			});
+		} else {
+			toast({
+				title: "Success",
+				description: result?.message,
+			});
+
+			router.push(`/posts/${convertToSlug(result?.data.title)}`);
+		}
+
+		setIsLoading(false);
 	}
 
 	return (
@@ -189,7 +215,10 @@ const PostForm = () => {
 					)}
 				/>
 
-				<Button type='submit' className='startup-form_btn text-white'>
+				<Button
+					type='submit'
+					className='startup-form_btn text-white'
+					disabled={isLoading == true ? true : false}>
 					<Send className='!size-6` mr-2' /> Submit
 				</Button>
 			</form>

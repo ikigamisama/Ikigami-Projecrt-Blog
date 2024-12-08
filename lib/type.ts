@@ -26,6 +26,14 @@ export type RegisterData = {
 	confirm_password: string;
 };
 
+export type PostBlogData = {
+	title: string;
+	description: string;
+	category: string;
+	imgLink: string;
+	content: string;
+};
+
 export interface EditPostButtonProps {
 	blog_id: string;
 }

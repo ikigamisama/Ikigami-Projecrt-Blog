@@ -26,8 +26,11 @@ import { useRouter } from "next/navigation";
 const RegisterForm = () => {
 	const router = useRouter();
 	const { toast } = useToast();
-	const [showPassword, setShowPassword] = useState(false);
-	const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+	const [showPassword, setShowPassword] = useState<boolean>(false);
+	const [showConfirmPassword, setShowConfirmPassword] =
+		useState<boolean>(false);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+
 	const form = useForm<z.infer<typeof registerFormSchema>>({
 		resolver: zodResolver(registerFormSchema),
 		defaultValues: {
@@ -41,12 +44,13 @@ const RegisterForm = () => {
 	});
 
 	async function onSubmit(values: z.infer<typeof registerFormSchema>) {
+		setIsLoading(true);
 		const result = await handleRegister(values);
 
 		if (result?.error) {
 			toast({
 				title: "Register Failed",
-				description: result.error,
+				description: result.message,
 				variant: "destructive",
 			});
 		} else {
@@ -57,6 +61,7 @@ const RegisterForm = () => {
 
 			router.push("/login");
 		}
+		setIsLoading(false);
 	}
 
 	return (
@@ -235,8 +240,11 @@ const RegisterForm = () => {
 						</FormItem>
 					)}
 				/>
-				<Button type='submit' className='startup-form_btn text-white'>
-					Register
+				<Button
+					type='submit'
+					className='startup-form_btn text-white'
+					disabled={isLoading == true ? true : false}>
+					{isLoading == false ? "Register" : "Loading . . . "}
 				</Button>
 			</form>
 		</Form>

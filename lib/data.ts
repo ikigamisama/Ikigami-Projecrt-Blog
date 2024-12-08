@@ -62,3 +62,4 @@ export const categoryOption: Option[] = [
 ];
 
 export const pageWithAuth: string[] = ["/login", "/register"];
+export const pageWithoutAuth: string[] = ["/create/posts", "/edit/account"];

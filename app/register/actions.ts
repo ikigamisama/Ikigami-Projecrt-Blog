@@ -12,23 +12,22 @@ export const handleRegister = async (registerData: RegisterData) => {
 		const { data, error } = await supabase.auth.signUp({
 			email: registerData.email,
 			password: registerData.password,
-			options: {
-				data: {
-					username: registerData.username,
-					first_name: registerData.first_name,
-					last_name: registerData.last_name,
-				},
-			},
 		});
 
 		if (data) {
-			return { data };
+			const { error } = await supabase.from("Author").insert({
+				first_name: registerData.first_name,
+				last_name: registerData.last_name,
+				username: registerData.username,
+				email: registerData.email,
+				auth_id: data.user?.id,
+			});
+			if (error) return { error: true, message: error.message };
+			else return { error: false, data };
 		}
 
-		if (error) {
-			return { error: error.message };
-		}
+		if (error) return { error: true, message: error.message };
 	} catch (error) {
-		return { error: "An unexpected error occurred." };
+		return { error: true, message: "An unexpected error occurred." };
 	}
 };

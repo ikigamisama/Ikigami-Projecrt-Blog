@@ -13,16 +13,16 @@ import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
 import { Button } from "./ui/button";
 
 import { jetbrainsMono, lato, workSans } from "@/lib/font";
-import { FaPencilAlt, FaEdit } from "react-icons/fa";
+import { FaEdit } from "react-icons/fa";
 import { RxAvatar } from "react-icons/rx";
-import profile_icon from "@/assets/profile_icon.png";
-
-import type { User } from "@supabase/supabase-js";
 import { handleLogout } from "@/app/login/actions";
 import { useToast } from "@/hooks/use-toast";
 
-const UserOptions = ({ user }: { user: User | null }) => {
+import profile_icon from "@/assets/profile_icon.png";
+
+const UserOptions = ({ author }: { author: any | null }) => {
 	const { toast } = useToast();
+
 	const onLogOut = async () => {
 		await handleLogout();
 
@@ -31,6 +31,7 @@ const UserOptions = ({ user }: { user: User | null }) => {
 			description: "Hoping to see you soon!!",
 		});
 	};
+
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
@@ -45,11 +46,11 @@ const UserOptions = ({ user }: { user: User | null }) => {
 					<div className='flex flex-col justify-start gap-2'>
 						<p
 							className={`font-bold text-[22px] text-black ${jetbrainsMono.className}`}>
-							{user?.user_metadata.first_name} {user?.user_metadata.last_name}
+							{author.first_name} {author.last_name}
 						</p>
 						<p
 							className={`font-bold text-[14px] !text-black-300 ${jetbrainsMono.className}`}>
-							@{user?.user_metadata.username}
+							@{author.username}
 						</p>
 					</div>
 				</DropdownMenuItem>
@@ -64,15 +65,7 @@ const UserOptions = ({ user }: { user: User | null }) => {
 					</Link>
 				</DropdownMenuItem>
 				<DropdownMenuSeparator />
-				<DropdownMenuItem asChild>
-					<Link
-						href='/create/account/'
-						className={`block w-full text-left text-[15px] font-bold ${lato.className}`}
-						prefetch={false}>
-						<FaPencilAlt />
-						Create Post
-					</Link>
-				</DropdownMenuItem>
+
 				<DropdownMenuSeparator />
 				<DropdownMenuItem asChild>
 					<Link

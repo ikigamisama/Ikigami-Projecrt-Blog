@@ -24,7 +24,9 @@ import { handleLogin } from "@/app/login/actions";
 
 const LoginForm = () => {
 	const { toast } = useToast();
-	const [showPassword, setShowPassword] = useState(false);
+	const [showPassword, setShowPassword] = useState<boolean>(false);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+
 	const form = useForm<z.infer<typeof loginFormSchema>>({
 		resolver: zodResolver(loginFormSchema),
 		defaultValues: {
@@ -34,20 +36,23 @@ const LoginForm = () => {
 	});
 
 	async function onSubmit(values: z.infer<typeof loginFormSchema>) {
+		setIsLoading(true);
 		const result = await handleLogin(values);
 
-		if (result?.error) {
+		if (result.error) {
 			toast({
 				title: "Login Failed",
-				description: result.error,
+				description: result.message,
 				variant: "destructive",
 			});
 		} else {
 			toast({
 				title: "Login Successful",
-				description: "You have logged in successfully!",
+				description: result.message,
 			});
 		}
+
+		setIsLoading(false);
 	}
 	return (
 		<Form {...form}>
@@ -117,8 +122,11 @@ const LoginForm = () => {
 					)}
 				/>
 
-				<Button type='submit' className='startup-form_btn text-white'>
-					Login
+				<Button
+					type='submit'
+					className='startup-form_btn text-white'
+					disabled={isLoading == true ? true : false}>
+					{isLoading == false ? "Login" : "Loading . . . "}
 				</Button>
 			</form>
 		</Form>
