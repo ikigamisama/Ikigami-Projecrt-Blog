@@ -7,7 +7,9 @@ export default async function Home() {
 	const cookieStore = await cookies();
 	const supabase = createClient(cookieStore);
 
-	const { data } = await supabase.from("Posts").select();
+	const { data } = await supabase
+		.from("Posts")
+		.select(`*,Author(id,username,first_name,last_name)`);
 
 	return (
 		<>

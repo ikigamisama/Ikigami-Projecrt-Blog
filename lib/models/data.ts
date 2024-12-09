@@ -4,18 +4,26 @@ export const getPostData = async (
 	title: string,
 	supabase: SupabaseClient<any, "public", any>,
 ) => {
-	const { data, error } = await supabase
+	const { data: postData } = await supabase
 		.from("Posts")
 		.select()
-		.eq("title", title)
+		.eq("slug_title", title)
 		.single();
 
-	if (error) {
-		console.error("Error fetching post data:", error);
-		return null;
-	}
+	if (postData) {
+		const { data: postAllData, error: postAllError } = await supabase
+			.from("Posts")
+			.select("*,Author(id,username,first_name,last_name)")
+			.eq("id", postData.id)
+			.single();
 
-	return data;
+		if (postAllError) {
+			console.error("Error fetching post data:", postAllError);
+			return null;
+		}
+
+		return postAllData;
+	}
 };
 
 export const logVisitor = async (
@@ -34,3 +42,7 @@ export const logVisitor = async (
 		console.log("Visitor logged successfully");
 	}
 };
+
+export const getUserData = async (
+	supabase: SupabaseClient<any, "public", any>,
+) => {};

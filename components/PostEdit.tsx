@@ -24,12 +24,13 @@ import { categoryOption } from "@/lib/data";
 import { jetbrainsMono, roboto_mono } from "@/lib/font";
 import { useTheme } from "next-themes";
 import { useState } from "react";
-import { handleCreatePostBlog } from "@/app/posts/actions";
+import { handleEditPost } from "@/app/posts/actions";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import { convertToSlug } from "@/lib/string";
+import { PostsListData } from "@/lib/type";
 
-const PostForm = () => {
+const PostEdit = ({ post }: { post: PostsListData }) => {
 	const router = useRouter();
 	const { theme } = useTheme();
 	const { toast } = useToast();
@@ -37,16 +38,16 @@ const PostForm = () => {
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
-			title: "",
-			description: "",
-			category: "",
-			imgLink: "",
-			content: "",
+			title: post?.title || "",
+			description: post?.description || "",
+			category: post?.category || "",
+			imgLink: post?.image_link || "",
+			content: post?.content || "",
 		},
 	});
 	async function onSubmit(values: z.infer<typeof formSchema>) {
 		setIsLoading(true);
-		const result = await handleCreatePostBlog(values);
+		const result = await handleEditPost(post.id, values);
 
 		if (result?.error) {
 			toast({
@@ -226,4 +227,4 @@ const PostForm = () => {
 	);
 };
 
-export default PostForm;
+export default PostEdit;

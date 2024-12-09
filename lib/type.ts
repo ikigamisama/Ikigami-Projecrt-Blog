@@ -35,6 +35,13 @@ export type PostBlogData = {
 	content: string;
 };
 
+export type AuthorData = {
+	id: string;
+	username: string;
+	last_name: string;
+	first_name: string;
+};
+
 export type PostsListData = {
 	id: string;
 	created_at: string;
@@ -44,6 +51,7 @@ export type PostsListData = {
 	image_link: string;
 	content: string;
 	author_id: string;
+	Author?: AuthorData;
 };
 
 export interface PostListDataInterface {

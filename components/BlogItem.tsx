@@ -30,7 +30,7 @@ const BlogItem = ({ info }: { info: PostsListData }) => {
 					<Link href={``}>
 						<p
 							className={`text-16-medium line-clamp-1 ${jetbrainsMono.className}`}>
-							{}
+							@{info?.Author?.username}
 						</p>
 					</Link>
 					<Link href={`posts/${convertToSlug(info.title)}`}>
@@ -61,7 +61,7 @@ const BlogItem = ({ info }: { info: PostsListData }) => {
 
 			<div className='flex-between gap-3 mt-5'>
 				<p className={`text-16-medium ${space_mono.className}`}>
-					{info.category}
+					{info.category.split(", ")[0]}
 				</p>
 				<Button className={`startup-card_btn ${space_mono.className}`} asChild>
 					<Link href={`posts/${convertToSlug(info.title)}`}>

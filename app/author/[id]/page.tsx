@@ -27,11 +27,7 @@ const Author = () => {
 
 			<div className='flex-1 flex flex-col gap-5 lg:-mt-5'>
 				<p className='text-30-bold'>All Blog</p>
-				<ul className='card_grid-sm'>
-					{blog_data.map((data, i) => (
-						<BlogItem info={data} key={i} />
-					))}
-				</ul>
+				<ul className='card_grid-sm'></ul>
 			</div>
 		</section>
 	);

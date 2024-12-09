@@ -5,7 +5,11 @@ import { Button } from "./ui/button";
 import { RiEdit2Fill } from "react-icons/ri";
 import { EditPostButtonProps } from "@/lib/type";
 
-const EditPostButton: React.FC<EditPostButtonProps> = ({ blog_id }) => {
+const EditPostButton: React.FC<EditPostButtonProps> = ({
+	blog_id,
+}: {
+	blog_id: string;
+}) => {
 	return (
 		<div className='fixed bottom-8 right-8'>
 			<Link href={`/edit/posts/${blog_id}`}>
