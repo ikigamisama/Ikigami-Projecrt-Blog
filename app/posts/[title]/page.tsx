@@ -9,7 +9,7 @@ import { convertToTitle } from "@/lib/string";
 import { getPostData } from "@/lib/models/data";
 import dayjs from "dayjs";
 
-const Posts = async ({ params }: { params: { title: string } }) => {
+const Posts = async ({ params }: { params: Promise<{ title: string }> }) => {
 	const { title } = await params;
 	const cookieStore = await cookies();
 	const supabase = createClient(cookieStore);

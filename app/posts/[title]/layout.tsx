@@ -10,7 +10,7 @@ export default async function PostLayout({
 	params,
 }: {
 	children: React.ReactNode;
-	params: { title: string };
+	params: Promise<{ title: string }>;
 }) {
 	const { title } = await params;
 	const cookieStore = await cookies();
