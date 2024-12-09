@@ -48,7 +48,7 @@ export const categoryOption: Option[] = [
 		label: "Machine Learning",
 	},
 	{
-		value: "Visualizaiton",
+		value: "Visualization",
 		label: "Visualization",
 	},
 	{

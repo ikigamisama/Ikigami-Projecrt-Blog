@@ -194,13 +194,13 @@ const PostForm = () => {
 								className={`startup-form_label ${jetbrainsMono.className}`}>
 								Content
 							</FormLabel>
-							<FormControl data-color-mode={theme == "false" && "light"}>
+							<FormControl data-color-mode='light'>
 								<MDEditor
 									{...field}
 									id='content'
 									preview='live'
 									height={300}
-									className='overflow-hidden border-r-full border-[3px] border-black'
+									className='overflow-hidden border-r-full border-[3px] border-black max-w-none prose prose-headings:mt-8 prose-headings:font-bold prose-headings:text-black prose-h1:text-[35px] prose-h2:text-[32px] prose-h3:text-3xl prose-h4:text-2xl prose-h5:text-xl prose-h6:text-lg prose-p:text-[1.25rem] prose-code:text-[#111827] prose-li:text-[1.25rem] prose-pre:bg-white-100 dark:prose-headings:text-white'
 									textareaProps={{
 										placeholder: "Share youe idea here . . . ",
 									}}

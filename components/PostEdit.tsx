@@ -22,7 +22,6 @@ import { Send } from "lucide-react";
 import MultipleSelector from "./ui/multiple-selector";
 import { categoryOption } from "@/lib/data";
 import { jetbrainsMono, roboto_mono } from "@/lib/font";
-import { useTheme } from "next-themes";
 import { useState } from "react";
 import { handleEditPost } from "@/app/posts/actions";
 import { useRouter } from "next/navigation";
@@ -32,7 +31,6 @@ import { PostsListData } from "@/lib/type";
 
 const PostEdit = ({ post }: { post: PostsListData }) => {
 	const router = useRouter();
-	const { theme } = useTheme();
 	const { toast } = useToast();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const form = useForm<z.infer<typeof formSchema>>({
@@ -195,13 +193,13 @@ const PostEdit = ({ post }: { post: PostsListData }) => {
 								className={`startup-form_label ${jetbrainsMono.className}`}>
 								Content
 							</FormLabel>
-							<FormControl data-color-mode={theme == "false" && "light"}>
+							<FormControl data-color-mode='light'>
 								<MDEditor
 									{...field}
 									id='content'
 									preview='live'
 									height={300}
-									className='overflow-hidden border-r-full border-[3px] border-black'
+									className='overflow-hidden max-w-none '
 									textareaProps={{
 										placeholder: "Share youe idea here . . . ",
 									}}

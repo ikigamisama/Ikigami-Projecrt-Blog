@@ -1,5 +1,4 @@
 import { getPostData, logVisitor } from "@/lib/models/data";
-import { convertToTitle } from "@/lib/string";
 import { createClient } from "@/utils/supabase/server";
 
 import { cookies } from "next/headers";

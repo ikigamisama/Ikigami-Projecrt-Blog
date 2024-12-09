@@ -7,6 +7,8 @@ import { cookies } from "next/headers";
 import EditPostButton from "@/components/EditPostButton";
 import { getPostData } from "@/lib/models/data";
 import dayjs from "dayjs";
+import MarkdownRenderer from "@/components/MarkdownRenderer";
+import { convertToSlug } from "@/lib/string";
 
 const Posts = async ({ params }: { params: Promise<{ title: string }> }) => {
 	const { title } = await params;
@@ -14,6 +16,7 @@ const Posts = async ({ params }: { params: Promise<{ title: string }> }) => {
 	const supabase = createClient(cookieStore);
 	const data = await getPostData(title, supabase);
 	const dateOnly = dayjs(data.created_at).format("MMMM DD, YYYY");
+	const categoryGroup = data.category.split(", ");
 
 	return (
 		<>
@@ -25,13 +28,16 @@ const Posts = async ({ params }: { params: Promise<{ title: string }> }) => {
 			</section>
 
 			<section className='section-container'>
-				<Image
-					src={data.image_link}
-					width={1000}
-					height={100}
-					alt='thumbnail'
-					className='w-full h-auto rounded-xl'
-				/>
+				{data.image_link && (
+					<Image
+						src={data.image_link}
+						width={1000}
+						height={100}
+						alt='thumbnail'
+						className='w-full h-auto rounded-xl'
+					/>
+				)}
+
 				<div className='flex-between gap-5 my-8'>
 					<Link href={`/author/`} className='flex gap-2 items-center mb-3'>
 						<Image
@@ -53,15 +59,20 @@ const Posts = async ({ params }: { params: Promise<{ title: string }> }) => {
 						</div>
 					</Link>
 
-					<p className={`category-tag ${jetbrainsMono.className}`}>
-						Machine Learning
-					</p>
+					<div className='flex flex-row gap-2'>
+						{categoryGroup.map((item: any, i: number) => (
+							<p
+								key={i}
+								className={`category-tag ${
+									jetbrainsMono.className
+								} ${convertToSlug(item)}`}>
+								{item}
+							</p>
+						))}
+					</div>
 				</div>
 
-				<article
-					className='prose font-work-sans break-all w-full'
-					dangerouslySetInnerHTML={{ __html: data.content }}
-				/>
+				<MarkdownRenderer content={data.content} />
 
 				<hr className='divider' />
 
