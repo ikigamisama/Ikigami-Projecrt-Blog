@@ -20,40 +20,44 @@ import { jetbrainsMono, roboto_mono } from "@/lib/font";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
+import { AuthorData } from "@/lib/type";
+import { handleEditAuthor } from "@/app/edit/actions";
+import { useToast } from "@/hooks/use-toast";
 
-const EditProfile = () => {
-	const [showCurrentPassword, setShowCurrentPassword] =
-		useState<boolean>(false);
-	const [showNewPassword, setShowNewPassword] = useState<boolean>(false);
-	const [showNewConfirmPassword, setShowNewConfirmPassword] =
-		useState<boolean>(false);
+const EditProfile = ({ user }: { user: AuthorData }) => {
+	const { toast } = useToast();
+
+	const [isLoadingUserEdit, setIsLoadingUserEdit] = useState<boolean>(false);
 
 	const formUserEdit = useForm<z.infer<typeof editUserInfoSchema>>({
 		resolver: zodResolver(editUserInfoSchema),
 		defaultValues: {
-			first_name: "",
-			last_name: "",
-			username: "",
-			email: "",
-			bio: "",
+			first_name: user.first_name || "",
+			last_name: user.last_name || "",
+			username: user.username || "",
+			email: user.email || "",
+			bio: user.bio || "",
 		},
 	});
 
-	const formPasswordEdit = useForm<z.infer<typeof editPasswordInfoSchema>>({
-		resolver: zodResolver(editPasswordInfoSchema),
-		defaultValues: {
-			current_password: "",
-			new_password: "",
-			confirm_new_password: "",
-		},
-	});
+	async function onSubmitUserInfo(values: z.infer<typeof editUserInfoSchema>) {
+		setIsLoadingUserEdit(true);
+		const result = await handleEditAuthor(values);
 
-	function onSubmitUserInfo(values: z.infer<typeof editUserInfoSchema>) {
-		console.log(values);
-	}
+		if (result.error) {
+			toast({
+				title: "Error !!",
+				description: result.message,
+				variant: "destructive",
+			});
+		} else {
+			toast({
+				title: "Success",
+				description: result?.message,
+			});
+		}
 
-	function onSubmitPassInfo(values: z.infer<typeof editPasswordInfoSchema>) {
-		console.log(values);
+		setIsLoadingUserEdit(false);
 	}
 
 	return (
@@ -186,146 +190,11 @@ const EditProfile = () => {
 						)}
 					/>
 
-					<Button type='submit' className='mt-8 startup-form_btn text-white'>
-						Edit
-					</Button>
-				</form>
-			</Form>
-			<Form {...formPasswordEdit}>
-				<form
-					onSubmit={formPasswordEdit.handleSubmit(onSubmitPassInfo)}
-					className='gap-4 flex flex-col'>
-					<FormField
-						control={formPasswordEdit.control}
-						name='current_password'
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel
-									htmlFor='password'
-									className={`startup-form_label ${jetbrainsMono.className}`}>
-									Current Password
-								</FormLabel>
-								<FormControl>
-									<div className='relative'>
-										<Input
-											type={showCurrentPassword ? "text" : "password"}
-											id='current_password'
-											placeholder='Enter Current Password'
-											className={`startup-form_input ${roboto_mono.className}`}
-											{...field}
-										/>
-										<Button
-											type='button'
-											variant='ghost'
-											onClick={() =>
-												setShowCurrentPassword(!showCurrentPassword)
-											}
-											className='absolute right-[3px] top-0 h-full px-4 py-2 hover:bg-transparent'
-											aria-label={
-												showCurrentPassword ? "Hide password" : "Show password"
-											}>
-											{showCurrentPassword ? (
-												<FaRegEyeSlash size={22} />
-											) : (
-												<FaRegEye size={22} />
-											)}
-										</Button>
-									</div>
-								</FormControl>
-
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-
-					<FormField
-						control={formPasswordEdit.control}
-						name='new_password'
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel
-									htmlFor='new_password'
-									className={`startup-form_label ${jetbrainsMono.className}`}>
-									New Password
-								</FormLabel>
-								<FormControl>
-									<div className='relative'>
-										<Input
-											type={showNewPassword ? "text" : "password"}
-											id='new_password'
-											placeholder='Enter New Current Password'
-											className={`startup-form_input ${roboto_mono.className}`}
-											{...field}
-										/>
-										<Button
-											type='button'
-											variant='ghost'
-											onClick={() => setShowNewPassword(!showNewPassword)}
-											className='absolute right-[3px] top-0 h-full px-4 py-2 hover:bg-transparent'
-											aria-label={
-												showNewPassword ? "Hide password" : "Show password"
-											}>
-											{showNewPassword ? (
-												<FaRegEyeSlash size={22} />
-											) : (
-												<FaRegEye size={22} />
-											)}
-										</Button>
-									</div>
-								</FormControl>
-
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-
-					<FormField
-						control={formPasswordEdit.control}
-						name='confirm_new_password'
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel
-									htmlFor='confirm_new_password'
-									className={`startup-form_label ${jetbrainsMono.className}`}>
-									Confirm New Password
-								</FormLabel>
-								<FormControl>
-									<div className='relative'>
-										<Input
-											type={showNewConfirmPassword ? "text" : "password"}
-											id='confirm_new_password'
-											placeholder='Enter New Password Confirmation'
-											className={`startup-form_input ${roboto_mono.className}`}
-											{...field}
-										/>
-										<Button
-											type='button'
-											variant='ghost'
-											onClick={() =>
-												setShowNewConfirmPassword(!showNewConfirmPassword)
-											}
-											className='absolute right-[3px] top-0 h-full px-4 py-2 hover:bg-transparent'
-											aria-label={
-												showNewConfirmPassword
-													? "Hide password"
-													: "Show password"
-											}>
-											{showNewConfirmPassword ? (
-												<FaRegEyeSlash size={22} />
-											) : (
-												<FaRegEye size={22} />
-											)}
-										</Button>
-									</div>
-								</FormControl>
-
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-
-					<Button type='submit' className='mt-8 startup-form_btn text-white'>
-						Change Password
+					<Button
+						type='submit'
+						className='mt-8 startup-form_btn text-white'
+						disabled={isLoadingUserEdit}>
+						{isLoadingUserEdit == true ? "Loading . . ." : "Edit"}
 					</Button>
 				</form>
 			</Form>

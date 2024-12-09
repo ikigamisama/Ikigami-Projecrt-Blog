@@ -31,13 +31,23 @@ const UserOptions = ({ author }: { author: any | null }) => {
 			description: "Hoping to see you soon!!",
 		});
 	};
+	const avatar_fallback = `${author.first_name[0]}${author.last_name[0]}`;
 
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<Avatar className='h-14 w-14'>
-					<AvatarImage src={profile_icon.src} alt='@shadcn' />
-					<AvatarFallback>JP</AvatarFallback>
+				<Avatar className='h-12 w-12'>
+					{author.avatar_url === null ? (
+						<AvatarFallback className='bg-primary text-white text-lg'>
+							{avatar_fallback}
+						</AvatarFallback>
+					) : (
+						<AvatarImage
+							src={`https://tdhghaslnufgtzjybhhf.supabase.co/storage/v1/object/public/${author.avatar_url}`}
+							alt={avatar_fallback}
+							className='object-cover'
+						/>
+					)}
 					<span className='sr-only'>Toggle user menu</span>
 				</Avatar>
 			</DropdownMenuTrigger>

@@ -1,9 +1,7 @@
 import type { StaticImageData } from "next/image";
 import type { IconType } from "react-icons";
-import { string } from "zod";
 
 export type LoginData = { email: string; password: string };
-
 export type CategoryData = { value: string; name: string };
 export type SocialType = { icon: IconType; path: string };
 
@@ -40,6 +38,18 @@ export type AuthorData = {
 	username: string;
 	last_name: string;
 	first_name: string;
+	auth_id?: string;
+	avatar_url?: string;
+	bio: string;
+	email: string;
+};
+
+export type AuthorEditData = {
+	first_name: string;
+	last_name: string;
+	username: string;
+	email: string;
+	bio: string;
 };
 
 export type PostsListData = {
