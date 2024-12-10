@@ -66,8 +66,8 @@ const Author = async ({ params, searchParams }: Props) => {
 				<Image
 					src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${authorData.avatar_url}`}
 					alt=''
-					width={100}
-					height={100}
+					width={200}
+					height={200}
 					className='profile_image w-[200px] h-[200px]'
 				/>
 
