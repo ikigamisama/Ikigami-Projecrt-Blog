@@ -27,13 +27,13 @@ const BlogItem = ({ info }: { info: PostsListData }) => {
 
 			<div className='flex-between mt-5 gap-5'>
 				<div className='flex-1'>
-					<Link href={``}>
+					<Link href={`/author/@${info?.Author?.username}`}>
 						<p
 							className={`text-16-medium line-clamp-1 ${jetbrainsMono.className}`}>
 							@{info?.Author?.username}
 						</p>
 					</Link>
-					<Link href={`posts/${convertToSlug(info.title)}`}>
+					<Link href={`/posts/${convertToSlug(info.title)}`}>
 						<h3
 							className={`text-26-semibold line-clamp-1  ${roboto_mono.className}`}>
 							{info.title}

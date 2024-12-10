@@ -9,14 +9,58 @@ import { getPostData } from "@/lib/models/data";
 import dayjs from "dayjs";
 import MarkdownRenderer from "@/components/MarkdownRenderer";
 import { convertToSlug } from "@/lib/string";
+import { notFound } from "next/navigation";
+import { Metadata, ResolvingMetadata } from "next";
 
-const Posts = async ({ params }: { params: Promise<{ title: string }> }) => {
+type Props = {
+	params: Promise<{ title: string }>;
+	searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
+};
+
+export async function generateMetadata(
+	{ params }: Props,
+	parent: ResolvingMetadata,
+): Promise<Metadata> {
+	const cookieStore = await cookies();
+	const supabase = createClient(cookieStore);
+	const { data, error } = await getPostData((await params).title, supabase);
+
+	if (error || !data) {
+		console.error("Error fetching post data:", error);
+		return {
+			title: "Post Not Found",
+			description: "The requested post could not be found.",
+		};
+	}
+
+	return {
+		title: `${data.title} | Iki's Project Blog`,
+		description: data.description,
+		authors: [
+			{
+				name: `${data.Author?.first_name} ${data.Author?.last_name}`,
+				url: data.Author?.avatar_url ?? undefined,
+			},
+		],
+		openGraph: {
+			title: `${data.title} | Iki's Project Blog`,
+			description: data.description,
+			images: [data.image_link ?? "/default-og-image.jpg"],
+		},
+	};
+}
+
+const Posts = async ({ params, searchParams }: Props) => {
 	const { title } = await params;
 	const cookieStore = await cookies();
 	const supabase = createClient(cookieStore);
-	const data = await getPostData(title, supabase);
-	const dateOnly = dayjs(data.created_at).format("MMMM DD, YYYY");
-	const categoryGroup = data.category.split(", ");
+	const { data, error } = await getPostData(title, supabase);
+	const dateOnly = dayjs(data?.created_at).format("MMMM DD, YYYY");
+	const categoryGroup = data?.category.split(", ");
+
+	if (!data || error) {
+		return notFound();
+	}
 
 	return (
 		<>
@@ -50,17 +94,17 @@ const Posts = async ({ params }: { params: Promise<{ title: string }> }) => {
 
 						<div>
 							<p className={`text-20-bold ${jetbrainsMono.className}`}>
-								{`${data.Author.first_name} ${data.Author.last_name}`}
+								{`${data?.Author?.first_name} ${data?.Author?.last_name}`}
 							</p>
 							<p
 								className={`text-16-medium !text-black-300 ${jetbrainsMono.className}`}>
-								@{data.Author.username}
+								@{data?.Author?.username}
 							</p>
 						</div>
 					</Link>
 
 					<div className='flex flex-row gap-2'>
-						{categoryGroup.map((item: any, i: number) => (
+						{categoryGroup?.map((item: any, i: number) => (
 							<p
 								key={i}
 								className={`category-tag ${

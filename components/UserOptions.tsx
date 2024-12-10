@@ -18,8 +18,6 @@ import { RxAvatar } from "react-icons/rx";
 import { handleLogout } from "@/app/login/actions";
 import { useToast } from "@/hooks/use-toast";
 
-import profile_icon from "@/assets/profile_icon.png";
-
 const UserOptions = ({ author }: { author: any | null }) => {
 	const { toast } = useToast();
 
@@ -67,7 +65,7 @@ const UserOptions = ({ author }: { author: any | null }) => {
 				<DropdownMenuSeparator />
 				<DropdownMenuItem asChild>
 					<Link
-						href='/author/12312/'
+						href={`/author/@${author.username}`}
 						className={`block w-full text-left text-[15px] font-bold ${lato.className}`}
 						prefetch={false}>
 						<RxAvatar />

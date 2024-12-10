@@ -30,7 +30,7 @@ export default async function PostLayout({
 	}
 
 	if (title) {
-		const postData = await getPostData(title, supabase);
+		const { data: postData, error } = await getPostData(title, supabase);
 
 		if (visitorId && postData) {
 			await logVisitor(visitorId, postData.id, supabase);

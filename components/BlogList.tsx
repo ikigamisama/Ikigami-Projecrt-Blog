@@ -3,6 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { roboto_mono } from "@/lib/font";
 import BlogItem from "./BlogItem";
 import { PostListDataInterface } from "@/lib/type";
+import { Skeleton } from "./ui/skeleton";
 
 const BlogList = ({ list }: PostListDataInterface) => {
 	return (
@@ -19,20 +20,129 @@ const BlogList = ({ list }: PostListDataInterface) => {
 					</TabsTrigger>
 				))}
 			</TabsList>
-			<TabsContent value='all'>
+			<TabsContent value='all' className='min-h-[500px]'>
 				<ul className='mt-7 card_grid'>
 					{!list ? (
-						<p>Loading . . .</p>
+						<>
+							<li className='group'>
+								<Skeleton className='w-full h-[400px]' />
+							</li>
+							<li className='group'>
+								<Skeleton className='w-full h-[400px]' />
+							</li>
+							<li className='group'>
+								<Skeleton className='w-full h-[400px]' />
+							</li>
+						</>
 					) : (
 						list.map((data, i) => <BlogItem info={data} key={i} />)
 					)}
 				</ul>
 			</TabsContent>
-			<TabsContent value='data-analysis'>Data Analysis List</TabsContent>
-			<TabsContent value='machine-learning'>Machine Learning List</TabsContent>
-			<TabsContent value='visualizaiton'>Visualization List</TabsContent>
-			<TabsContent value='techniques'>Technique List</TabsContent>
-			<TabsContent value='resource'>Resource List</TabsContent>
+			<TabsContent value='data-analysis' className='min-h-[500px]'>
+				<ul className='mt-7 card_grid'>
+					{!list ? (
+						<>
+							<li className='group'>
+								<Skeleton className='w-full h-[400px]' />
+							</li>
+							<li className='group'>
+								<Skeleton className='w-full h-[400px]' />
+							</li>
+							<li className='group'>
+								<Skeleton className='w-full h-[400px]' />
+							</li>
+						</>
+					) : (
+						list.map((data, i) => {
+							if (data.category.split(", ")[0] == "Data Analysis")
+								return <BlogItem info={data} key={i} />;
+						})
+					)}
+				</ul>
+			</TabsContent>
+			<TabsContent value='machine-learning' className='min-h-[500px]'>
+				<ul className='mt-7 card_grid'>
+					{!list ? (
+						<>
+							<li className='group'>
+								<Skeleton className='w-full h-[400px]' />
+							</li>
+							<li className='group'>
+								<Skeleton className='w-full h-[400px]' />
+							</li>
+							<li className='group'>
+								<Skeleton className='w-full h-[400px]' />
+							</li>
+						</>
+					) : (
+						list.map((data, i) => {
+							if (data.category.split(", ")[0] == "Machine Learning")
+								return <BlogItem info={data} key={i} />;
+						})
+					)}
+				</ul>
+			</TabsContent>
+			<TabsContent value='visualizaiton' className='min-h-[500px]'>
+				{!list ? (
+					<>
+						<li className='group'>
+							<Skeleton className='w-full h-[400px]' />
+						</li>
+						<li className='group'>
+							<Skeleton className='w-full h-[400px]' />
+						</li>
+						<li className='group'>
+							<Skeleton className='w-full h-[400px]' />
+						</li>
+					</>
+				) : (
+					list.map((data, i) => {
+						if (data.category.split(", ")[0] == "Visualizaiton")
+							return <BlogItem info={data} key={i} />;
+					})
+				)}
+			</TabsContent>
+			<TabsContent value='techniques' className='min-h-[500px]'>
+				{!list ? (
+					<>
+						<li className='group'>
+							<Skeleton className='w-full h-[400px]' />
+						</li>
+						<li className='group'>
+							<Skeleton className='w-full h-[400px]' />
+						</li>
+						<li className='group'>
+							<Skeleton className='w-full h-[400px]' />
+						</li>
+					</>
+				) : (
+					list.map((data, i) => {
+						if (data.category.split(", ")[0] == "Techniques")
+							return <BlogItem info={data} key={i} />;
+					})
+				)}
+			</TabsContent>
+			<TabsContent value='resource' className='min-h-[500px]'>
+				{!list ? (
+					<>
+						<li className='group'>
+							<Skeleton className='w-full h-[400px]' />
+						</li>
+						<li className='group'>
+							<Skeleton className='w-full h-[400px]' />
+						</li>
+						<li className='group'>
+							<Skeleton className='w-full h-[400px]' />
+						</li>
+					</>
+				) : (
+					list.map((data, i) => {
+						if (data.category.split(", ")[0] == "Resource")
+							return <BlogItem info={data} key={i} />;
+					})
+				)}
+			</TabsContent>
 		</Tabs>
 	);
 };

@@ -1,3 +1,4 @@
+import { PostgrestError } from "@supabase/supabase-js";
 import type { StaticImageData } from "next/image";
 import type { IconType } from "react-icons";
 
@@ -56,11 +57,13 @@ export type PostsListData = {
 	id: string;
 	created_at: string;
 	title: string;
+	slug_title: string;
 	description: string;
 	category: string;
 	image_link: string;
 	content: string;
 	author_id: string;
+	updated_at?: string;
 	Author?: AuthorData;
 };
 
@@ -69,4 +72,9 @@ export interface PostListDataInterface {
 }
 export interface EditPostButtonProps {
 	blog_id: string;
+}
+
+export interface PostResponse {
+	postAllData: PostsListData | null;
+	postError: PostgrestError | null;
 }

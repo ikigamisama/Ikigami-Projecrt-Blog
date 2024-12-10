@@ -22,7 +22,7 @@ const ProfileImg = ({
 	const [image, setImage] = useState<string | undefined | null>(
 		img_url == null
 			? null
-			: `https://tdhghaslnufgtzjybhhf.supabase.co/storage/v1/object/public/${img_url}`,
+			: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${img_url}`,
 	);
 	const supabase = createClient();
 
@@ -49,7 +49,7 @@ const ProfileImg = ({
 				.eq("id", author_id);
 
 			setImage(
-				`https://tdhghaslnufgtzjybhhf.supabase.co/storage/v1/object/public/${avatarDataUser?.fullPath}`,
+				`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${avatarDataUser?.fullPath}`,
 			);
 		} catch (error) {
 			alert("Error uploading avatar!");

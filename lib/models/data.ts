@@ -1,10 +1,11 @@
 import { SupabaseClient } from "@supabase/supabase-js";
+import { AuthorData, PostsListData } from "../type";
 
 export const getPostData = async (
 	title: string,
 	supabase: SupabaseClient<any, "public", any>,
-) => {
-	const { data: postData } = await supabase
+): Promise<{ data: PostsListData | null; error: Error | null }> => {
+	const { data: postData, error: postError } = await supabase
 		.from("Posts")
 		.select()
 		.eq("slug_title", title)
@@ -13,17 +14,14 @@ export const getPostData = async (
 	if (postData) {
 		const { data: postAllData, error: postAllError } = await supabase
 			.from("Posts")
-			.select("*,Author(id,username,first_name,last_name)")
+			.select("*, Author(id, username, first_name, last_name)")
 			.eq("id", postData.id)
 			.single();
 
-		if (postAllError) {
-			console.error("Error fetching post data:", postAllError);
-			return null;
-		}
-
-		return postAllData;
+		return { data: postAllData, error: postAllError };
 	}
+
+	return { data: null, error: postError };
 };
 
 export const logVisitor = async (
@@ -43,6 +41,33 @@ export const logVisitor = async (
 	}
 };
 
-export const getUserData = async (
+export const getPostList = async (
 	supabase: SupabaseClient<any, "public", any>,
-) => {};
+): Promise<{ data: PostsListData[] | null; error: Error | null }> => {
+	const { data, error } = await supabase
+		.from("Posts")
+		.select(`*,Author(id,username,first_name,last_name)`);
+
+	return { data, error };
+};
+
+export const getAuthorList = async (
+	supabase: SupabaseClient<any, "public", any>,
+): Promise<{ data: PostsListData[] | null; error: Error | null }> => {
+	const { data, error } = await supabase.from("Author").select();
+
+	return { data, error };
+};
+
+export const getAuthorPostList = async (
+	username: string,
+	supabase: SupabaseClient<any, "public", any>,
+): Promise<{ data: AuthorData | null; error: Error | null }> => {
+	const { data, error } = await supabase
+		.from("Author")
+		.select()
+		.eq("username", username)
+		.single();
+
+	return { data, error };
+};

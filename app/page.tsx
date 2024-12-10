@@ -2,14 +2,13 @@ import BlogList from "@/components/BlogList";
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import { roboto_mono, space_mono } from "@/lib/font";
+import { getPostList } from "@/lib/models/data";
 
 export default async function Home() {
 	const cookieStore = await cookies();
 	const supabase = createClient(cookieStore);
 
-	const { data } = await supabase
-		.from("Posts")
-		.select(`*,Author(id,username,first_name,last_name)`);
+	const { data } = await getPostList(supabase);
 
 	return (
 		<>
