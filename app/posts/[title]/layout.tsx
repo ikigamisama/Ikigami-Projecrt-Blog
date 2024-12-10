@@ -21,9 +21,14 @@ export default async function PostLayout({
 
 	let visitorId: string;
 	if (!user) {
-		visitorId = (await cookieStore).get("visitor_id")?.value || uuidv4();
-		if (!(await cookieStore).get("visitor_id")) {
-			(await cookieStore).set("visitor_id", visitorId, { expires: 365 });
+		const existingVisitorId = cookieStore.get("visitor_id")?.value;
+
+		if (!existingVisitorId) {
+			const response = await fetch("/api/set-visitor-cookie");
+			const { visitorId: newVisitorId } = await response.json();
+			visitorId = newVisitorId;
+		} else {
+			visitorId = existingVisitorId;
 		}
 	} else {
 		visitorId = "";
