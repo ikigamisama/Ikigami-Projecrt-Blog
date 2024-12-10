@@ -24,7 +24,9 @@ export default async function PostLayout({
 		const existingVisitorId = cookieStore.get("visitor_id")?.value;
 
 		if (!existingVisitorId) {
-			const response = await fetch("/api/set-visitor-cookie");
+			const response = await fetch(
+				`${process.env.NEXT_PUBLIC_SITE_URL}/api/set-visitor-cookie`,
+			);
 			const { visitorId: newVisitorId } = await response.json();
 			visitorId = newVisitorId;
 		} else {
