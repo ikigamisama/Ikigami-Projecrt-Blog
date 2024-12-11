@@ -13,8 +13,12 @@ const BlogItem = async ({
 	con,
 }: {
 	info: PostsListData;
-	con: SupabaseClient<any, "public", any>;
+	con: SupabaseClient<any, "public", any> | undefined;
 }) => {
+	if (!con) {
+		return null;
+	}
+
 	const dateOnly = dayjs(info.created_at).format("MMMM DD, YYYY");
 	const { count } = await con
 		?.from("VisitorLogs")

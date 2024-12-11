@@ -88,7 +88,9 @@ const Author = async ({ params, searchParams }: Props) => {
 					{postData == null ? (
 						<p>Loading . . .</p>
 					) : (
-						postData.map((data, i) => <BlogItem info={data} key={i} />)
+						postData.map((data, i) => (
+							<BlogItem info={data} con={supabase} key={i} />
+						))
 					)}
 				</ul>
 			</div>
