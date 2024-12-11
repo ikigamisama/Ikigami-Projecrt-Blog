@@ -14,7 +14,7 @@ export const getPostData = async (
 	if (postData) {
 		const { data: postAllData, error: postAllError } = await supabase
 			.from("Posts")
-			.select("*, Author(id, username, first_name, last_name)")
+			.select("*, Author(id, username, first_name, last_name, avatar_url)")
 			.eq("id", postData.id)
 			.single();
 
@@ -46,7 +46,7 @@ export const getPostList = async (
 ): Promise<{ data: PostsListData[] | null; error: Error | null }> => {
 	const { data, error } = await supabase
 		.from("Posts")
-		.select(`*,Author(id,username,first_name,last_name)`);
+		.select(`*,Author(id,username,first_name,last_name , avatar_url)`);
 
 	return { data, error };
 };

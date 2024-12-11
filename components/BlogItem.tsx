@@ -5,11 +5,14 @@ import { Button } from "./ui/button";
 import { PostsListData } from "@/lib/type";
 import { jetbrainsMono, roboto_mono, space_mono } from "@/lib/font";
 import dayjs from "dayjs";
-import profile_icon from "@/assets/profile_icon.png";
 import { convertToSlug } from "@/lib/string";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 const BlogItem = ({ info }: { info: PostsListData }) => {
 	const dateOnly = dayjs(info.created_at).format("MMMM DD, YYYY");
+
+	const avatar_fallback = `${info?.Author?.first_name[0]}${info?.Author?.last_name[0]}`;
+
 	return (
 		<li className='startup-card group'>
 			<div className='flex-between'>
@@ -40,13 +43,20 @@ const BlogItem = ({ info }: { info: PostsListData }) => {
 						</h3>
 					</Link>
 				</div>
-				<Image
-					src={profile_icon}
-					alt={``}
-					width={48}
-					height={48}
-					className='rounded-full'
-				/>
+
+				<Avatar className=' w-[48px] h-[48px] flex items-center'>
+					{info?.Author?.avatar_url === null ? (
+						<AvatarFallback className='bg-primary text-white text-5xl'>
+							{avatar_fallback}
+						</AvatarFallback>
+					) : (
+						<AvatarImage
+							src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${info?.Author?.avatar_url}`}
+							alt={avatar_fallback}
+							className='object-cover'
+						/>
+					)}
+				</Avatar>
 			</div>
 
 			<p className={`startup-card_desc ${roboto_mono.className}`}>

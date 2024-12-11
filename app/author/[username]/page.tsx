@@ -1,10 +1,10 @@
-import Image from "next/image";
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import BlogItem from "@/components/BlogItem";
 import { notFound } from "next/navigation";
 import { getAuthorPostList } from "@/lib/models/data";
 import { Metadata, ResolvingMetadata } from "next";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 type Props = {
 	params: Promise<{ username: string }>;
@@ -28,9 +28,7 @@ export async function generateMetadata(
 		openGraph: {
 			title: `@${data?.username} | Iki's Project Blog`,
 			description: data?.bio,
-			images: [
-				data?.avatar_url ?? "/default-og-image.jpg", // Fallback image if none provided
-			],
+			images: [data?.avatar_url ?? "/default-og-image.jpg"],
 		},
 	};
 }
@@ -54,6 +52,7 @@ const Author = async ({ params, searchParams }: Props) => {
 		.select(`*,Author(id,username,first_name,last_name)`)
 		.eq("author_id", authorData.id);
 
+	const avatar_fallback = `${authorData.first_name[0]}${authorData.last_name[0]}`;
 	return (
 		<section className='profile_container'>
 			<div className='profile_card'>
@@ -63,13 +62,19 @@ const Author = async ({ params, searchParams }: Props) => {
 					</h3>
 				</div>
 
-				<Image
-					src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${authorData.avatar_url}`}
-					alt=''
-					width={200}
-					height={200}
-					className='profile_image w-[200px] h-[200px]'
-				/>
+				<Avatar className='w-[200px] h-[200px] flex items-center'>
+					{authorData.avatar_url === null ? (
+						<AvatarFallback className='bg-primary text-white text-5xl'>
+							{avatar_fallback}
+						</AvatarFallback>
+					) : (
+						<AvatarImage
+							src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${authorData.avatar_url}`}
+							alt={avatar_fallback}
+							className='object-cover'
+						/>
+					)}
+				</Avatar>
 
 				<p className='text-30-extrabold mt-7 text-center'>
 					@{authorData.username}
