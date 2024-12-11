@@ -5,7 +5,7 @@ import BlogItem from "./BlogItem";
 import { PostListDataInterface } from "@/lib/type";
 import { Skeleton } from "./ui/skeleton";
 
-const BlogList = ({ list }: PostListDataInterface) => {
+const BlogList = ({ list, con }: PostListDataInterface) => {
 	return (
 		<Tabs
 			defaultValue='all'
@@ -35,7 +35,7 @@ const BlogList = ({ list }: PostListDataInterface) => {
 							</li>
 						</>
 					) : (
-						list.map((data, i) => <BlogItem info={data} key={i} />)
+						list.map((data, i) => <BlogItem info={data} con={con} key={i} />)
 					)}
 				</ul>
 			</TabsContent>
@@ -56,7 +56,7 @@ const BlogList = ({ list }: PostListDataInterface) => {
 					) : (
 						list.map((data, i) => {
 							if (data.category.split(", ")[0] == "Data Analysis")
-								return <BlogItem info={data} key={i} />;
+								return <BlogItem info={data} con={con} key={i} />;
 						})
 					)}
 				</ul>
@@ -78,7 +78,7 @@ const BlogList = ({ list }: PostListDataInterface) => {
 					) : (
 						list.map((data, i) => {
 							if (data.category.split(", ")[0] == "Machine Learning")
-								return <BlogItem info={data} key={i} />;
+								return <BlogItem info={data} con={con} key={i} />;
 						})
 					)}
 				</ul>
@@ -99,7 +99,7 @@ const BlogList = ({ list }: PostListDataInterface) => {
 				) : (
 					list.map((data, i) => {
 						if (data.category.split(", ")[0] == "Visualizaiton")
-							return <BlogItem info={data} key={i} />;
+							return <BlogItem info={data} con={con} key={i} />;
 					})
 				)}
 			</TabsContent>
@@ -119,7 +119,7 @@ const BlogList = ({ list }: PostListDataInterface) => {
 				) : (
 					list.map((data, i) => {
 						if (data.category.split(", ")[0] == "Techniques")
-							return <BlogItem info={data} key={i} />;
+							return <BlogItem info={data} con={con} key={i} />;
 					})
 				)}
 			</TabsContent>
@@ -139,7 +139,7 @@ const BlogList = ({ list }: PostListDataInterface) => {
 				) : (
 					list.map((data, i) => {
 						if (data.category.split(", ")[0] == "Resource")
-							return <BlogItem info={data} key={i} />;
+							return <BlogItem info={data} con={con} key={i} />;
 					})
 				)}
 			</TabsContent>

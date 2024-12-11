@@ -28,7 +28,7 @@ export default async function Home() {
 					</p>
 				</div>
 
-				<BlogList list={data} />
+				<BlogList list={data} con={supabase} />
 			</div>
 		</>
 	);

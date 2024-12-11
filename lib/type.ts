@@ -1,4 +1,4 @@
-import { PostgrestError } from "@supabase/supabase-js";
+import { PostgrestError, SupabaseClient } from "@supabase/supabase-js";
 import type { StaticImageData } from "next/image";
 import type { IconType } from "react-icons";
 
@@ -69,6 +69,7 @@ export type PostsListData = {
 
 export interface PostListDataInterface {
 	list: PostsListData[] | null;
+	con?: SupabaseClient<any, "public", any>;
 }
 export interface EditPostButtonProps {
 	blog_id: string;
