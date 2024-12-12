@@ -84,64 +84,70 @@ const BlogList = ({ list, con }: PostListDataInterface) => {
 				</ul>
 			</TabsContent>
 			<TabsContent value='visualizaiton' className='min-h-[500px]'>
-				{!list ? (
-					<>
-						<li className='group'>
-							<Skeleton className='w-full h-[400px]' />
-						</li>
-						<li className='group'>
-							<Skeleton className='w-full h-[400px]' />
-						</li>
-						<li className='group'>
-							<Skeleton className='w-full h-[400px]' />
-						</li>
-					</>
-				) : (
-					list.map((data, i) => {
-						if (data.category.split(", ")[0] == "Visualizaiton")
-							return <BlogItem info={data} con={con} key={i} />;
-					})
-				)}
+				<ul className='mt-7 card_grid'>
+					{!list ? (
+						<>
+							<li className='group'>
+								<Skeleton className='w-full h-[400px]' />
+							</li>
+							<li className='group'>
+								<Skeleton className='w-full h-[400px]' />
+							</li>
+							<li className='group'>
+								<Skeleton className='w-full h-[400px]' />
+							</li>
+						</>
+					) : (
+						list.map((data, i) => {
+							if (data.category.split(", ")[0] == "Visualizaiton")
+								return <BlogItem info={data} con={con} key={i} />;
+						})
+					)}
+				</ul>
 			</TabsContent>
 			<TabsContent value='techniques' className='min-h-[500px]'>
-				{!list ? (
-					<>
-						<li className='group'>
-							<Skeleton className='w-full h-[400px]' />
-						</li>
-						<li className='group'>
-							<Skeleton className='w-full h-[400px]' />
-						</li>
-						<li className='group'>
-							<Skeleton className='w-full h-[400px]' />
-						</li>
-					</>
-				) : (
-					list.map((data, i) => {
-						if (data.category.split(", ")[0] == "Techniques")
-							return <BlogItem info={data} con={con} key={i} />;
-					})
-				)}
+				<ul className='mt-7 card_grid'>
+					{!list ? (
+						<>
+							<li className='group'>
+								<Skeleton className='w-full h-[400px]' />
+							</li>
+							<li className='group'>
+								<Skeleton className='w-full h-[400px]' />
+							</li>
+							<li className='group'>
+								<Skeleton className='w-full h-[400px]' />
+							</li>
+						</>
+					) : (
+						list.map((data, i) => {
+							if (data.category.split(", ")[0] == "Techniques")
+								return <BlogItem info={data} con={con} key={i} />;
+						})
+					)}
+				</ul>
 			</TabsContent>
 			<TabsContent value='resource' className='min-h-[500px]'>
-				{!list ? (
-					<>
-						<li className='group'>
-							<Skeleton className='w-full h-[400px]' />
-						</li>
-						<li className='group'>
-							<Skeleton className='w-full h-[400px]' />
-						</li>
-						<li className='group'>
-							<Skeleton className='w-full h-[400px]' />
-						</li>
-					</>
-				) : (
-					list.map((data, i) => {
-						if (data.category.split(", ")[0] == "Resource")
-							return <BlogItem info={data} con={con} key={i} />;
-					})
-				)}
+				<ul className='mt-7 card_grid'>
+					{!list ? (
+						<>
+							<li className='group'>
+								<Skeleton className='w-full h-[400px]' />
+							</li>
+							<li className='group'>
+								<Skeleton className='w-full h-[400px]' />
+							</li>
+							<li className='group'>
+								<Skeleton className='w-full h-[400px]' />
+							</li>
+						</>
+					) : (
+						list.map((data, i) => {
+							if (data.category.split(", ")[0] == "Resource")
+								return <BlogItem info={data} con={con} key={i} />;
+						})
+					)}
+				</ul>
 			</TabsContent>
 		</Tabs>
 	);
