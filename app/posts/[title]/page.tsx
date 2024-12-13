@@ -126,8 +126,6 @@ const Posts = async ({ params, searchParams }: Props) => {
 
 				<MarkdownRenderer content={data.content} />
 
-				<hr className='divider' />
-
 				<EditPostButton blog_id={data.id} />
 			</section>
 		</>

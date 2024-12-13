@@ -1,7 +1,7 @@
 import { CategoryData, SocialType } from "./type";
 
 import { FaXTwitter } from "react-icons/fa6";
-import { FaGithub, FaKaggle, FaLinkedin, FaYoutube } from "react-icons/fa";
+import { FaGithub, FaKaggle, FaLinkedin } from "react-icons/fa";
 import { Option } from "@/components/ui/multiple-selector";
 
 export const category: CategoryData[] = [
@@ -62,6 +62,10 @@ export const categoryOption: Option[] = [
 	{
 		value: "Resource",
 		label: "Resource",
+	},
+	{
+		value: "Project",
+		label: "Project",
 	},
 ];
 
