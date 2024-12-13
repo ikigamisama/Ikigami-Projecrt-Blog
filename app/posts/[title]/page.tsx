@@ -11,6 +11,7 @@ import MarkdownRenderer from "@/components/MarkdownRenderer";
 import { convertToSlug } from "@/lib/string";
 import { notFound } from "next/navigation";
 import { Metadata, ResolvingMetadata } from "next";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 type Props = {
 	params: Promise<{ title: string }>;
@@ -62,6 +63,7 @@ const Posts = async ({ params, searchParams }: Props) => {
 		return notFound();
 	}
 
+	const avatar_fallback = `${data?.Author?.first_name[0]}${data?.Author?.last_name[0]}`;
 	return (
 		<>
 			<section className='post_header_container min-h-[450px] mb-8'>
@@ -84,16 +86,22 @@ const Posts = async ({ params, searchParams }: Props) => {
 
 				<div className='flex-between gap-5 my-8'>
 					<Link href={`/author/`} className='flex gap-2 items-center mb-3'>
-						<Image
-							src={profile_icon}
-							alt='avatar'
-							width={72}
-							height={72}
-							className='rounded-full drop-shadow-lg mr-2'
-						/>
+						<Avatar className='w-[70px] h-[70px] flex items-center'>
+							{data?.Author?.avatar_url === null ? (
+								<AvatarFallback className='bg-primary text-white text-5xl'>
+									{avatar_fallback}
+								</AvatarFallback>
+							) : (
+								<AvatarImage
+									src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${data?.Author?.avatar_url}`}
+									alt={avatar_fallback}
+									className='object-cover'
+								/>
+							)}
+						</Avatar>
 
 						<div>
-							<p className={`text-20-bold ${jetbrainsMono.className}`}>
+							<p className={`text-20-bold mb-1 ${jetbrainsMono.className}`}>
 								{`${data?.Author?.first_name} ${data?.Author?.last_name}`}
 							</p>
 							<p
