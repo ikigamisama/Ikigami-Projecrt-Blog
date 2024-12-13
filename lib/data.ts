@@ -1,7 +1,7 @@
 import { CategoryData, SocialType } from "./type";
 
 import { FaXTwitter } from "react-icons/fa6";
-import { FaGithub, FaLinkedin, FaYoutube } from "react-icons/fa";
+import { FaGithub, FaKaggle, FaLinkedin, FaYoutube } from "react-icons/fa";
 import { Option } from "@/components/ui/multiple-selector";
 
 export const category: CategoryData[] = [
@@ -32,10 +32,14 @@ export const category: CategoryData[] = [
 ];
 
 export const socials: SocialType[] = [
-	{ icon: FaGithub, path: "/" },
-	{ icon: FaLinkedin, path: "/" },
-	{ icon: FaYoutube, path: "/" },
-	{ icon: FaXTwitter, path: "/" },
+	{ icon: FaGithub, path: "https://github.com/ikigamisama" },
+	{
+		icon: FaLinkedin,
+		path: "https://www.linkedin.com/in/franz-monzales-671775135",
+	},
+
+	{ icon: FaXTwitter, path: "https://x.com/ikigamidevs" },
+	{ icon: FaKaggle, path: "https://www.kaggle.com/franzmonzales" },
 ];
 
 export const categoryOption: Option[] = [
