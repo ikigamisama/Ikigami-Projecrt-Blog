@@ -12,6 +12,7 @@ import { convertToSlug } from "@/lib/string";
 import { notFound } from "next/navigation";
 import { Metadata, ResolvingMetadata } from "next";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import TableContents from "@/components/TableContents";
 
 type Props = {
 	params: Promise<{ title: string }>;
@@ -124,7 +125,10 @@ const Posts = async ({ params, searchParams }: Props) => {
 					</div>
 				</div>
 
-				<MarkdownRenderer content={data.content} />
+				<div className='relative flex flex-col xl:flex-row gap-8'>
+					<MarkdownRenderer content={data.content} />
+					<TableContents />
+				</div>
 
 				<EditPostButton blog_id={data.id} />
 			</section>

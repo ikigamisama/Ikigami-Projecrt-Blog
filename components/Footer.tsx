@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const Footer = () => {
 	return (
-		<footer className='flex justify-around flex-col xl:flex-row gap-2 sm:gap-0  bg-black py-5 items-center'>
+		<footer className='flex justify-around flex-col xl:flex-row gap-6 xl:gap-0 bg-black py-5 items-center'>
 			<Image src={assets.logo_light} alt='' width={120} />
 			<p className={`text-sm text-white ${roboto_mono.className}`}>
 				All Right Reserved Copyright{" "}
