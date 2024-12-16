@@ -11,9 +11,9 @@ export default async function FaSitemap() {
 	const { data: authorData } = await getAuthorList(supabase);
 
 	const authorList =
-		authorData?.map((post: PostsListData) => ({
-			url: `https://ikigami-project-blog.vercel.app/author/@${post.slug_title}`,
-			lastModified: post?.created_at || new Date().toISOString(),
+		authorData?.map((author: any) => ({
+			url: `https://ikigami-project-blog.vercel.app/author/@${author.username}`,
+			lastModified: author?.created_at || new Date().toISOString(),
 			changeFrequency: "monthly",
 			priority: 1,
 		})) ?? [];
