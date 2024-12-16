@@ -67,6 +67,12 @@ export type PostsListData = {
 	Author?: AuthorData;
 };
 
+export type HeadingsData = {
+	text: string;
+	id: string;
+	tag: string;
+};
+
 export interface PostListDataInterface {
 	list: PostsListData[] | null;
 	con?: SupabaseClient<any, "public", any>;
