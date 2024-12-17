@@ -85,7 +85,7 @@ const Posts = async ({ params, searchParams }: Props) => {
 					/>
 				)}
 
-				<div className='flex-between gap-5 my-8'>
+				<div className='flex items-center justify-between flex-col xl:flex-row gap-5 my-8'>
 					<Link href={`/author/`} className='flex gap-2 items-center mb-3'>
 						<Avatar className='w-[70px] h-[70px] flex items-center'>
 							{data?.Author?.avatar_url === null ? (
@@ -101,7 +101,7 @@ const Posts = async ({ params, searchParams }: Props) => {
 							)}
 						</Avatar>
 
-						<div>
+						<div className='ml-2'>
 							<p className={`text-20-bold mb-1 ${jetbrainsMono.className}`}>
 								{`${data?.Author?.first_name} ${data?.Author?.last_name}`}
 							</p>
