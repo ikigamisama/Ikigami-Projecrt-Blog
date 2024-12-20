@@ -60,7 +60,6 @@ const TableContents = () => {
 			target.scrollIntoView({ behavior: "smooth" }); // Smooth scroll to target
 		}
 	};
-	console.log(headings);
 	return (
 		<div
 			className={`w-[25%] h-full hidden xl:block ${

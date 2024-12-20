@@ -20,7 +20,14 @@ const SessionProvider = ({
 			router.push("/");
 		}
 
-		if (!data && pageWithoutAuth.includes(pathname)) {
+		const isPageWithoutAuth = pageWithoutAuth.some((path) => {
+			if (path === "/edit/posts") {
+				return pathname.startsWith(path);
+			}
+			return pathname === path;
+		});
+
+		if (!data && isPageWithoutAuth) {
 			router.push("/login");
 		}
 	}, [data, pathname, router]);

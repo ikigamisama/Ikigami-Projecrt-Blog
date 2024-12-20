@@ -10,6 +10,7 @@ import { Toaster } from "@/components/ui/toaster";
 
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
+import { ifSignInUser } from "@/lib/models/data";
 
 export const metadata: Metadata = {
 	metadataBase: new URL("https://ikigami-project-blog.vercel.app"),
@@ -28,9 +29,7 @@ export default async function RootLayout({
 	const cookieStore = await cookies();
 	const supabase = createClient(cookieStore);
 
-	const {
-		data: { user },
-	} = await supabase.auth.getUser();
+	const { user } = await ifSignInUser(supabase);
 
 	let authorData = null;
 	if (user) {

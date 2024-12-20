@@ -10,12 +10,12 @@ const Login = async () => {
 
 				<LoginForm />
 
-				<p className={`text-center text-sm ${jetbrainsMono.className}`}>
+				{/* <p className={`text-center text-sm ${jetbrainsMono.className}`}>
 					Don't have an account? Register{" "}
 					<Link href='/register' className='font-bold'>
 						Here
 					</Link>
-				</p>
+				</p> */}
 			</div>
 		</section>
 	);

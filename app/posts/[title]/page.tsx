@@ -60,10 +60,11 @@ const Posts = async ({ params, searchParams }: Props) => {
 	const dateOnly = dayjs(data?.created_at).format("MMMM DD, YYYY");
 	const categoryGroup = data?.category.split(", ");
 
+	const avatar_fallback = `${data?.Author?.first_name[0]}${data?.Author?.last_name[0]}`;
+
 	if (!data || error) {
 		return notFound();
 	}
-	const avatar_fallback = `${data?.Author?.first_name[0]}${data?.Author?.last_name[0]}`;
 	return (
 		<>
 			<section className='post_header_container min-h-[450px] mb-8'>

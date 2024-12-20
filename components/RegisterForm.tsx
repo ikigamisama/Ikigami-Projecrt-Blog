@@ -20,7 +20,7 @@ import { jetbrainsMono, roboto_mono } from "@/lib/font";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { handleRegister } from "@/app/register/actions";
+import { handleRegister } from "@/app/register1/actions";
 import { useRouter } from "next/navigation";
 
 const RegisterForm = () => {
