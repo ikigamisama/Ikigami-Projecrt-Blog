@@ -1,11 +1,10 @@
 import Image from "next/image";
-import profile_icon from "@/assets/profile_icon.png";
 import Link from "next/link";
 import { jetbrainsMono } from "@/lib/font";
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import EditPostButton from "@/components/EditPostButton";
-import { getPostData } from "@/lib/models/data";
+import { getPostData, ifSignInUser } from "@/lib/models/data";
 import dayjs from "dayjs";
 import MarkdownRenderer from "@/components/MarkdownRenderer";
 import { convertToSlug } from "@/lib/string";
@@ -57,13 +56,13 @@ const Posts = async ({ params, searchParams }: Props) => {
 	const cookieStore = await cookies();
 	const supabase = createClient(cookieStore);
 	const { data, error } = await getPostData(title, supabase);
+	const { user } = await ifSignInUser(supabase);
 	const dateOnly = dayjs(data?.created_at).format("MMMM DD, YYYY");
 	const categoryGroup = data?.category.split(", ");
 
 	if (!data || error) {
 		return notFound();
 	}
-
 	const avatar_fallback = `${data?.Author?.first_name[0]}${data?.Author?.last_name[0]}`;
 	return (
 		<>
@@ -129,8 +128,7 @@ const Posts = async ({ params, searchParams }: Props) => {
 					<MarkdownRenderer content={data.content} />
 					<TableContents />
 				</div>
-
-				<EditPostButton blog_id={data.id} />
+				{user != null && <EditPostButton blog_id={data.id} />}
 			</section>
 		</>
 	);

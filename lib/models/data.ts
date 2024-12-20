@@ -1,5 +1,15 @@
-import { SupabaseClient } from "@supabase/supabase-js";
+import { SupabaseClient, User } from "@supabase/supabase-js";
 import { AuthorData, PostsListData } from "../type";
+
+export const ifSignInUser = async (
+	supabase: SupabaseClient<any, "public", any>,
+): Promise<{ user: User | null }> => {
+	const {
+		data: { user },
+	} = await supabase.auth.getUser();
+
+	return { user };
+};
 
 export const getPostData = async (
 	title: string,

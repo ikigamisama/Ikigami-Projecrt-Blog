@@ -1,8 +1,7 @@
-import { getPostData, logVisitor } from "@/lib/models/data";
+import { getPostData, ifSignInUser, logVisitor } from "@/lib/models/data";
 import { createClient } from "@/utils/supabase/server";
 
 import { cookies } from "next/headers";
-import { v4 as uuidv4 } from "uuid";
 
 export default async function PostLayout({
 	children,
@@ -15,9 +14,7 @@ export default async function PostLayout({
 	const cookieStore = await cookies();
 	const supabase = createClient(cookieStore);
 
-	const {
-		data: { user },
-	} = await supabase.auth.getUser();
+	const { user } = await ifSignInUser(supabase);
 
 	let visitorId: string;
 	if (!user) {
