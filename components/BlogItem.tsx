@@ -6,24 +6,9 @@ import { PostsListData } from "@/lib/type";
 import { convertToSlug } from "@/lib/string";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { jetbrainsMono, roboto_mono, space_mono } from "@/lib/font";
-import type { SupabaseClient } from "@supabase/supabase-js";
 
-const BlogItem = async ({
-	info,
-	con,
-}: {
-	info: PostsListData;
-	con: SupabaseClient<any, "public", any> | undefined;
-}) => {
-	if (!con) {
-		return null;
-	}
-
+const BlogItem = ({ info }: { info: PostsListData }) => {
 	const dateOnly = dayjs(info.created_at).format("MMMM DD, YYYY");
-	const { count } = await con
-		?.from("VisitorLogs")
-		.select("*", { count: "exact" })
-		.eq("post_id", info.id);
 	const avatar_fallback = `${info?.Author?.first_name[0]}${info?.Author?.last_name[0]}`;
 
 	return (
@@ -36,7 +21,7 @@ const BlogItem = async ({
 					<EyeIcon className='size-6 text-primary' />
 					<span
 						className={`text-[16px] text-black font-bold ${roboto_mono.className}`}>
-						{count}
+						{`${info?.VisitorLogCount}`}
 					</span>
 				</div>
 			</div>

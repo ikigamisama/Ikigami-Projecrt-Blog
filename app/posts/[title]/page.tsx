@@ -1,17 +1,19 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Metadata, ResolvingMetadata } from "next";
+import { notFound } from "next/navigation";
+import { cookies } from "next/headers";
+
+import { convertToSlug } from "@/lib/string";
 import { jetbrainsMono } from "@/lib/font";
 import { createClient } from "@/utils/supabase/server";
-import { cookies } from "next/headers";
-import EditPostButton from "@/components/EditPostButton";
 import { getPostData, ifSignInUser } from "@/lib/models/data";
 import dayjs from "dayjs";
-import MarkdownRenderer from "@/components/MarkdownRenderer";
-import { convertToSlug } from "@/lib/string";
-import { notFound } from "next/navigation";
-import { Metadata, ResolvingMetadata } from "next";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
 import TableContents from "@/components/TableContents";
+import EditPostButton from "@/components/EditPostButton";
+import MarkdownRenderer from "@/components/MarkdownRenderer";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 type Props = {
 	params: Promise<{ title: string }>;
@@ -51,7 +53,7 @@ export async function generateMetadata(
 	};
 }
 
-const Posts = async ({ params, searchParams }: Props) => {
+const Posts = async ({ params }: Props) => {
 	const { title } = await params;
 	const cookieStore = await cookies();
 	const supabase = createClient(cookieStore);

@@ -65,6 +65,7 @@ export type PostsListData = {
 	author_id: string;
 	updated_at?: string;
 	Author?: AuthorData;
+	VisitorLogCount?: number;
 };
 
 export type HeadingsData = {
@@ -84,4 +85,12 @@ export interface EditPostButtonProps {
 export interface PostResponse {
 	postAllData: PostsListData | null;
 	postError: PostgrestError | null;
+}
+
+export interface BlogListProps {
+	list: PostsListData[] | null;
+}
+
+export interface BlogItemProps {
+	list: PostsListData;
 }

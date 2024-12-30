@@ -56,10 +56,19 @@ export const getPostList = async (
 ): Promise<{ data: PostsListData[] | null; error: Error | null }> => {
 	const { data, error } = await supabase
 		.from("Posts")
-		.select(`*,Author(id,username,first_name,last_name , avatar_url)`)
+		.select(
+			`*,Author(id,username,first_name,last_name , avatar_url), VisitorLogs(count)`,
+		)
 		.order("created_at", { ascending: false });
 
-	return { data, error };
+	const processedData = data
+		? data.map((post) => ({
+				...post,
+				VisitorLogCount: post.VisitorLogs?.[0]?.count || 0,
+		  }))
+		: null;
+
+	return { data: processedData, error };
 };
 
 export const getAuthorList = async (

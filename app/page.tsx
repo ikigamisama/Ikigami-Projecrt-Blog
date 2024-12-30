@@ -1,14 +1,31 @@
+"use client";
+
 import BlogList from "@/components/BlogList";
-import { createClient } from "@/utils/supabase/server";
-import { cookies } from "next/headers";
+import LoadingBlogList from "@/components/LoadingBlogList";
 import { roboto_mono, space_mono } from "@/lib/font";
-import { getPostList } from "@/lib/models/data";
+import { PostsListData } from "@/lib/type";
+import { useEffect, useState } from "react";
 
-export default async function Home() {
-	const cookieStore = await cookies();
-	const supabase = createClient(cookieStore);
+export default function Home() {
+	const [data, setData] = useState<PostsListData[] | null>(null);
+	const [loading, setLoading] = useState(true);
 
-	const { data } = await getPostList(supabase);
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				setLoading(true);
+				const res = await fetch("/api/blogs");
+				const { data } = await res.json();
+				setData(data);
+			} catch (error) {
+				console.error("Error fetching data:", error);
+			} finally {
+				setLoading(false);
+			}
+		};
+
+		fetchData();
+	}, []);
 
 	return (
 		<>
@@ -28,7 +45,7 @@ export default async function Home() {
 					</p>
 				</div>
 
-				<BlogList list={data} con={supabase} />
+				{loading ? <LoadingBlogList /> : <BlogList list={data} />}
 			</div>
 		</>
 	);
