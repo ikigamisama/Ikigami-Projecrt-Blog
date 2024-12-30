@@ -1,3 +1,4 @@
+import React, { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Metadata, ResolvingMetadata } from "next";
@@ -14,6 +15,7 @@ import TableContents from "@/components/TableContents";
 import EditPostButton from "@/components/EditPostButton";
 import MarkdownRenderer from "@/components/MarkdownRenderer";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import LoadingBlogList from "@/components/LoadingBlogList";
 
 type Props = {
 	params: Promise<{ title: string }>;
@@ -137,4 +139,10 @@ const Posts = async ({ params }: Props) => {
 	);
 };
 
-export default Posts;
+export default function PostPage({ params }: Props) {
+	return (
+		<Suspense fallback={<LoadingBlogList />}>
+			<Posts params={params} />
+		</Suspense>
+	);
+}
