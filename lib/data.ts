@@ -67,6 +67,14 @@ export const categoryOption: Option[] = [
 		value: "Project",
 		label: "Project",
 	},
+	{
+		value: "Highlight",
+		label: "Highlight",
+	},
+	{
+		value: "Stratascratch",
+		label: "Stratascratch",
+	},
 ];
 
 export const pageWithAuth: string[] = ["/login", "/register"];
