@@ -41,7 +41,7 @@ const PostEdit = ({ post }: { post: PostsListData }) => {
 			title: post?.title || "",
 			description: post?.description || "",
 			category: post?.category || "",
-			secondary_category: post?.secondary_category || "",
+			secondary_category: post?.secondary_category || null,
 			imgLink: post?.image_link || "",
 			content: post?.content || "",
 		},

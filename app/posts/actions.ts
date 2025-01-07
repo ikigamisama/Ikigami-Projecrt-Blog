@@ -62,6 +62,7 @@ export const handleEditPost = async (id: string, postData: PostBlogData) => {
 				title: postData.title,
 				description: postData.description,
 				category: postData.category,
+				secondary_category: postData.secondary_category,
 				image_link: postData.imgLink,
 				content: postData.content,
 				slug_title: convertToSlug(postData.title),
