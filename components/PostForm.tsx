@@ -20,7 +20,7 @@ import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { Send } from "lucide-react";
 import MultipleSelector from "./ui/multiple-selector";
-import { categoryOption } from "@/lib/data";
+import { categoryOption, secondaryCategoryOptions } from "@/lib/data";
 import { jetbrainsMono, roboto_mono } from "@/lib/font";
 import { useTheme } from "next-themes";
 import { useState } from "react";
@@ -28,6 +28,8 @@ import { handleCreatePostBlog } from "@/app/posts/actions";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import { convertToSlug } from "@/lib/string";
+import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+import { Label } from "./ui/label";
 
 const PostForm = () => {
 	const router = useRouter();
@@ -40,10 +42,13 @@ const PostForm = () => {
 			title: "",
 			description: "",
 			category: "",
+			secondary_category: null,
 			imgLink: "",
 			content: "",
 		},
 	});
+	const selectedCategory = form.watch("category");
+
 	async function onSubmit(values: z.infer<typeof formSchema>) {
 		setIsLoading(true);
 		const result = await handleCreatePostBlog(values);
@@ -154,11 +159,47 @@ const PostForm = () => {
 									}
 								/>
 							</FormControl>
-
 							<FormMessage />
 						</FormItem>
 					)}
 				/>
+
+				{selectedCategory.includes("Stratascratch") && (
+					<FormField
+						control={form.control}
+						name='secondary_category'
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel
+									className={`startup-form_label ${jetbrainsMono.className}`}>
+									Stratascratch Category
+								</FormLabel>
+								<RadioGroup
+									defaultValue='business-analysis'
+									onValueChange={field.onChange}>
+									<div className='grid grid-cols-2 gap-4 mt-4'>
+										{secondaryCategoryOptions.map((option) => (
+											<div
+												key={option.value}
+												className='flex items-center space-x-2'>
+												<RadioGroupItem
+													value={option.value}
+													id={option.value}
+												/>
+												<Label
+													htmlFor={option.value}
+													className={`${jetbrainsMono.className}`}>
+													{option.label}
+												</Label>
+											</div>
+										))}
+									</div>
+								</RadioGroup>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+				)}
 
 				<FormField
 					control={form.control}

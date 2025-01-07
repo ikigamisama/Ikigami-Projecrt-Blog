@@ -30,6 +30,7 @@ export type PostBlogData = {
 	title: string;
 	description: string;
 	category: string;
+	secondary_category: string | null;
 	imgLink: string;
 	content: string;
 };
@@ -60,6 +61,7 @@ export type PostsListData = {
 	slug_title: string;
 	description: string;
 	category: string;
+	secondary_category: string | null;
 	image_link: string;
 	content: string;
 	author_id: string;

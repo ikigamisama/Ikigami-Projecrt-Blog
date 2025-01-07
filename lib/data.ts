@@ -29,6 +29,10 @@ export const category: CategoryData[] = [
 		value: "resource",
 		name: "Resource",
 	},
+	{
+		value: "stratascratch",
+		name: "Stratascratch",
+	},
 ];
 
 export const socials: SocialType[] = [
@@ -75,6 +79,16 @@ export const categoryOption: Option[] = [
 		value: "Stratascratch",
 		label: "Stratascratch",
 	},
+];
+
+export const secondaryCategoryOptions: Option[] = [
+	{ value: "business-analysis", label: "Business Analysis" },
+	{ value: "data-exploration", label: "Data Exploration" },
+	{ value: "data-engineering", label: "Data Engineering" },
+	{ value: "regression", label: "Regression" },
+	{ value: "classification", label: "Classification" },
+	{ value: "nlp", label: "NLP" },
+	{ value: "clustering", label: "Clustering" },
 ];
 
 export const pageWithAuth: string[] = ["/login", "/register"];

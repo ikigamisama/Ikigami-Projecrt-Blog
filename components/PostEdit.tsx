@@ -20,7 +20,7 @@ import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { Send } from "lucide-react";
 import MultipleSelector from "./ui/multiple-selector";
-import { categoryOption } from "@/lib/data";
+import { categoryOption, secondaryCategoryOptions } from "@/lib/data";
 import { jetbrainsMono, roboto_mono } from "@/lib/font";
 import { useState } from "react";
 import { handleEditPost } from "@/app/posts/actions";
@@ -28,6 +28,8 @@ import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import { convertToSlug } from "@/lib/string";
 import { PostsListData } from "@/lib/type";
+import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+import { Label } from "./ui/label";
 
 const PostEdit = ({ post }: { post: PostsListData }) => {
 	const router = useRouter();
@@ -39,10 +41,12 @@ const PostEdit = ({ post }: { post: PostsListData }) => {
 			title: post?.title || "",
 			description: post?.description || "",
 			category: post?.category || "",
+			secondary_category: post?.secondary_category || "",
 			imgLink: post?.image_link || "",
 			content: post?.content || "",
 		},
 	});
+	const selectedCategory = form.watch("category");
 	async function onSubmit(values: z.infer<typeof formSchema>) {
 		setIsLoading(true);
 		const result = await handleEditPost(post.id, values);
@@ -158,6 +162,43 @@ const PostEdit = ({ post }: { post: PostsListData }) => {
 						</FormItem>
 					)}
 				/>
+
+				{selectedCategory.includes("Stratascratch") && (
+					<FormField
+						control={form.control}
+						name='secondary_category'
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel
+									className={`startup-form_label ${jetbrainsMono.className}`}>
+									Stratascratch Category
+								</FormLabel>
+								<RadioGroup
+									defaultValue='business-analysis'
+									onValueChange={field.onChange}>
+									<div className='grid grid-cols-2 gap-4 mt-4'>
+										{secondaryCategoryOptions.map((option) => (
+											<div
+												key={option.value}
+												className='flex items-center space-x-2'>
+												<RadioGroupItem
+													value={option.value}
+													id={option.value}
+												/>
+												<Label
+													htmlFor={option.value}
+													className={`${jetbrainsMono.className}`}>
+													{option.label}
+												</Label>
+											</div>
+										))}
+									</div>
+								</RadioGroup>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+				)}
 
 				<FormField
 					control={form.control}

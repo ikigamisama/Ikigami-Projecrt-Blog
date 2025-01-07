@@ -185,6 +185,12 @@
 	.category-tag.resource {
 		@apply bg-yellow-100;
 	}
+	.category-tag.highlight {
+		@apply bg-red-100;
+	}
+	.category-tag.stratascratch {
+		@apply bg-teal-100;
+	}
 
 	/* profile */
 	.profile_container {

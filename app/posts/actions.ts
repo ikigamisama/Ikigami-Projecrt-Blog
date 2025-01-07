@@ -26,6 +26,7 @@ export const handleCreatePostBlog = async (postBlogData: PostBlogData) => {
 						title: postBlogData.title,
 						description: postBlogData.description,
 						category: postBlogData.category,
+						secondary_category: postBlogData.secondary_category,
 						image_link: postBlogData.imgLink,
 						content: postBlogData.content,
 						author_id: authorData.id,
