@@ -165,7 +165,7 @@ const BlogList = ({ list, con }: PostListDataInterface) => {
 						</>
 					) : (
 						list.map((data, i) => {
-							if (data.category.split(", ")[0] == "Resource")
+							if (data.category.split(", ")[0] == "Stratascratch")
 								return <BlogItem info={data} key={i} />;
 						})
 					)}
