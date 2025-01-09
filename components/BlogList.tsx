@@ -149,6 +149,28 @@ const BlogList = ({ list, con }: PostListDataInterface) => {
 					)}
 				</ul>
 			</TabsContent>
+			<TabsContent value='stratascratch' className='min-h-[500px]'>
+				<ul className='mt-7 card_grid'>
+					{!list ? (
+						<>
+							<li className='group'>
+								<Skeleton className='w-full h-[400px]' />
+							</li>
+							<li className='group'>
+								<Skeleton className='w-full h-[400px]' />
+							</li>
+							<li className='group'>
+								<Skeleton className='w-full h-[400px]' />
+							</li>
+						</>
+					) : (
+						list.map((data, i) => {
+							if (data.category.split(", ")[0] == "Resource")
+								return <BlogItem info={data} key={i} />;
+						})
+					)}
+				</ul>
+			</TabsContent>
 		</Tabs>
 	);
 };
