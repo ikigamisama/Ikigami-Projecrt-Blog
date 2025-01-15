@@ -5,7 +5,7 @@ export async function POST(request: Request) {
 		const body = await request.json();
 
 		const response = await fetch(
-			`${process.env.NEXT_PUBLIC_PROJECT_BACKEND_API}/predict/loan-application/`,
+			`${process.env.NEXT_PUBLIC_PROJECT_BACKEND_API}${body.url}`,
 			{
 				method: "POST",
 				headers: {

@@ -60,6 +60,7 @@ const LoanApplication = () => {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify({
+					url: "/predict/loan-application/",
 					person_age: values.person_age,
 					person_gender: values.person_gender,
 					person_education: values.person_education,
