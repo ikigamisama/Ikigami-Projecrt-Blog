@@ -104,3 +104,26 @@ export const editPasswordInfoSchema = z
 		message: "New passwords don't match.",
 		path: ["confirm_new_password"],
 	});
+
+export const loanApprovalPredictionSchema = z.object({
+	person_age: z.number().min(18).max(70),
+	person_gender: z.enum(["male", "female"]),
+	person_education: z.enum(["Bachelor", "Master", "PhD", "High School"]),
+	person_income: z.number().min(0),
+	person_emp_exp: z.number().min(0).max(50),
+	person_home_ownership: z.enum(["OWN", "RENT", "MORTGAGE", "OTHER"]),
+	loan_amnt: z.number().min(1000),
+	loan_intent: z.enum([
+		"DEBTCONSOLIDATION",
+		"HOMEIMPROVEMENT",
+		"EDUCATION",
+		"MEDICAL",
+		"VENTURE",
+		"PERSONAL",
+	]),
+	loan_int_rate: z.number().min(0).max(100),
+	loan_percent_income: z.number().min(0).max(100),
+	cb_person_cred_hist_length: z.number().min(0).max(30),
+	credit_score: z.number().min(350).max(850),
+	previous_loan_defaults_on_file: z.enum(["Yes", "No"]),
+});

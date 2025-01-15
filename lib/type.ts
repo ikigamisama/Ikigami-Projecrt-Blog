@@ -96,3 +96,25 @@ export interface BlogListProps {
 export interface BlogItemProps {
 	list: PostsListData;
 }
+
+export type LoanApprovalFormData = {
+	person_age: number;
+	person_gender: "male" | "female";
+	person_education: "Bachelor" | "Master" | "PhD" | "High School";
+	person_income: number;
+	person_emp_exp: number;
+	person_home_ownership: "OWN" | "RENT" | "OTHER";
+	loan_amnt: number;
+	loan_intent:
+		| "DEBTCONSOLIDATION"
+		| "HOMEIMPROVEMENT"
+		| "EDUCATION"
+		| "MEDICAL"
+		| "VENTURE"
+		| "PERSONAL";
+	loan_int_rate: number;
+	loan_percent_income: number;
+	cb_person_cred_hist_length: number;
+	credit_score: number;
+	previous_loan_defaults_on_file: "Yes" | "No";
+};
