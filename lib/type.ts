@@ -118,3 +118,11 @@ export type LoanApprovalFormData = {
 	credit_score: number;
 	previous_loan_defaults_on_file: "Yes" | "No";
 };
+
+export type TableDataVisualizer = {
+	data: string[];
+	columns: string[];
+	file_name: string;
+	num_columns: number;
+	num_rows: number;
+};

@@ -127,3 +127,13 @@ export const loanApprovalPredictionSchema = z.object({
 	credit_score: z.number().min(350).max(850),
 	previous_loan_defaults_on_file: z.enum(["Yes", "No"]),
 });
+
+export const spellingAndGrammarSchema = z.object({
+	text: z.string(),
+});
+
+export const dataVisualizerSchema = z.object({
+	xAxis: z.string(),
+	yAxis: z.string(),
+	plotType: z.string(),
+});
