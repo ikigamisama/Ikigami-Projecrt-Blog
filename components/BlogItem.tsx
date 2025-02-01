@@ -72,9 +72,9 @@ const BlogItem = ({ info }: { info: PostsListData }) => {
 					{info.category.split(", ")[0]}
 				</p>
 				<Button className={`startup-card_btn ${space_mono.className}`} asChild>
-					<Link href={`posts/${convertToSlug(info.title)}`}>
+					<a href={`posts/${convertToSlug(info.title)}`}>
 						<b>Details</b>
-					</Link>
+					</a>
 				</Button>
 			</div>
 		</li>

@@ -1,5 +1,6 @@
 import DataVisualizer from "@/components/Projects/DataVisualizer";
 import LoanApplication from "@/components/Projects/LoanApplication";
+import Questionare from "@/components/Projects/Questionare";
 import SpellGrammarChecker from "@/components/Projects/SpellGrammarChecker";
 import { notFound } from "next/navigation";
 
@@ -16,6 +17,8 @@ const Project = async ({ params }: Props) => {
 			return <SpellGrammarChecker />;
 		case "data-visualizer":
 			return <DataVisualizer />;
+		case "question-interview":
+			return <Questionare />;
 		default:
 			return notFound();
 	}
