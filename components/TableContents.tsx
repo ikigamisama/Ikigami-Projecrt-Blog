@@ -27,7 +27,7 @@ const TableContents = () => {
 		const scrapeArticleContent = () => {
 			const contentDiv = document.getElementById("article_content");
 			if (contentDiv) {
-				const headingElements = contentDiv.querySelectorAll("h1, h2, h3");
+				const headingElements = contentDiv.querySelectorAll("h1, h2, h3, h4");
 
 				const headingData = Array.from(headingElements).map(
 					(heading, index) => {
@@ -57,7 +57,7 @@ const TableContents = () => {
 	const handleScrollTo = (id: string) => {
 		const target = document.getElementById(id);
 		if (target) {
-			target.scrollIntoView({ behavior: "smooth" }); // Smooth scroll to target
+			target.scrollIntoView({ behavior: "smooth" });
 		}
 	};
 	return (
@@ -72,7 +72,11 @@ const TableContents = () => {
 
 			<ul className='overflow-y-auto overflow-x-hidden h-[800px]'>
 				{headings.map((item, i) => (
-					<li key={i} className={`pt-4 ${item.tag == "h3" ? "pl-6" : "pl-0"}`}>
+					<li
+						key={i}
+						className={`pt-4 ${
+							item.tag === "h3" ? "pl-4" : item.tag === "h4" ? "pl-6" : "pl-0"
+						}`}>
 						<button
 							onClick={() => handleScrollTo(headingIds[i])}
 							className={`text-base  ${

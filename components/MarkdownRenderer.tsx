@@ -1,21 +1,25 @@
 import { unified } from "unified";
 import remarkParse from "remark-parse";
 import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
 import remarkRehype from "remark-rehype";
 import rehypePrism from "rehype-prism";
+import rehypeKatex from "rehype-katex";
 import rehypeStringify from "rehype-stringify";
 
 import "prismjs/plugins/line-numbers/prism-line-numbers.css";
-
 import "prismjs/components/prism-javascript";
 import "prismjs/components/prism-python";
+import "katex/dist/katex.min.css";
 
 const MarkdownRenderer = async ({ content }: { content: any }) => {
 	const getCleanSource = await unified()
 		.use(remarkParse)
 		.use(remarkGfm)
+		.use(remarkMath, { singleDollarTextMath: false })
 		.use(remarkRehype)
 		.use(rehypePrism, { plugins: ["copy-to-clipboard", "line-numbers"] })
+		.use(rehypeKatex)
 		.use(rehypeStringify)
 		.process(content);
 
