@@ -1,3 +1,4 @@
+import { category } from "./data";
 import { PostgrestError, SupabaseClient } from "@supabase/supabase-js";
 import type { StaticImageData } from "next/image";
 import type { IconType } from "react-icons";
@@ -125,4 +126,42 @@ export type TableDataVisualizer = {
 	file_name: string;
 	num_columns: number;
 	num_rows: number;
+};
+
+export type QuestionsData = {
+	id?: string;
+	question: string;
+	category?: string;
+	answer?: string;
+	choices: string;
+};
+
+export type QuestionareListData = {
+	id?: string;
+	question: string;
+	choices: string[];
+};
+
+export type QuestionNumChoicesType = {
+	value: number;
+	label: string;
+};
+
+export type QuizTypeProps = {
+	category: string;
+	question_num: number | string;
+};
+
+export type SubmitAnswerData = {
+	id: string | undefined;
+	answer: string;
+};
+
+export type QuestionAnswer = {
+	id: string | undefined;
+	answer: any;
+	is_correct: boolean;
+	choices?: string[] | undefined;
+	correct_ans: string | undefined;
+	question: string | undefined;
 };

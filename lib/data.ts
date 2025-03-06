@@ -97,3 +97,84 @@ export const pageWithoutAuth: string[] = [
 	"/edit/account",
 	"/edit/posts",
 ];
+
+export const questionCategoryChoice: Option[] = [
+	{
+		value: "all",
+		label: "All",
+	},
+	{
+		value: "business_intelligence",
+		label: "Business Intelligence",
+	},
+	{
+		value: "data",
+		label: "Data Fundamentals",
+	},
+	{
+		value: "data_governance",
+		label: "Data Governance",
+	},
+	{
+		value: "data_modeling",
+		label: "Data Modeling",
+	},
+	{
+		value: "deep_learning",
+		label: "Deep Learning",
+	},
+	{
+		value: "etl",
+		label: "Extract, Transfer, Load",
+	},
+	{
+		value: "feature_engineering",
+		label: "Feature Engineering",
+	},
+	{
+		value: "machine_learning",
+		label: "Machine Learning",
+	},
+	{
+		value: "pandas",
+		label: "Pandas",
+	},
+	{
+		value: "python",
+		label: "Python",
+	},
+	{
+		value: "statistics",
+		label: "Statistics",
+	},
+	{
+		value: "sql",
+		label: "SQL",
+	},
+	{
+		value: "visualization",
+		label: "Visualization",
+	},
+];
+export const questionNumChoice: Option[] = [
+	{
+		value: "5",
+		label: "5",
+	},
+	{
+		value: "10",
+		label: "10",
+	},
+	{
+		value: "15",
+		label: "15",
+	},
+	{
+		value: "20",
+		label: "20",
+	},
+	{
+		value: "25",
+		label: "25",
+	},
+];

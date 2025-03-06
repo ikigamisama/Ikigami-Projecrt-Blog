@@ -1,5 +1,5 @@
 import { SupabaseClient, User } from "@supabase/supabase-js";
-import { AuthorData, PostsListData } from "../type";
+import { AuthorData, PostsListData, QuestionsData } from "../type";
 
 export const ifSignInUser = async (
 	supabase: SupabaseClient<any, "public", any>,
@@ -90,4 +90,31 @@ export const getAuthorPostList = async (
 		.single();
 
 	return { data, error };
+};
+
+export const getQuestionList = async (
+	supabase: SupabaseClient<any, "public", any>,
+	category: string,
+	question_num: number,
+): Promise<{ data: QuestionsData[] | null; error: Error | null }> => {
+	const { data, error } = await supabase.rpc("get_random_questions", {
+		category_param: category,
+		limit_param: question_num,
+	});
+
+	if (error) {
+		console.error("Error fetching questions:", error);
+		return { data: null, error };
+	}
+
+	return { data, error: null };
+};
+
+export const getCorrectAnswerQuestion = async (
+	supabase: SupabaseClient<any, "public", any>,
+	id: string | undefined,
+): Promise<{ data: QuestionsData }> => {
+	const { data } = await supabase.from("Quiz").select().eq("id", id).single();
+
+	return { data };
 };

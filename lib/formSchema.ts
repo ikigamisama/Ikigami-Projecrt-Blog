@@ -137,3 +137,10 @@ export const dataVisualizerSchema = z.object({
 	yAxis: z.string(),
 	plotType: z.string(),
 });
+
+export const quizTypeSchema = z.object({
+	category: z.string(),
+	question_num: z.string(),
+});
+
+export const quizExamUserAnswer = z.object({});
