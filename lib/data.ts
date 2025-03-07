@@ -152,6 +152,10 @@ export const questionCategoryChoice: Option[] = [
 		label: "SQL",
 	},
 	{
+		value: "stratascratch",
+		label: "Stratascratch",
+	},
+	{
 		value: "visualization",
 		label: "Visualization",
 	},
