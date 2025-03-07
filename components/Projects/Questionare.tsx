@@ -46,6 +46,10 @@ const Questionare = () => {
 		setScore(result.score);
 	};
 
+	const retakeTest = () => {
+		setCurrentQuizEvent("setup");
+	};
+
 	return (
 		<section className='flex flex-col min-h-[calc(90vh-30px)] w-full items-center justify-center px-4'>
 			<div className='container mx-auto'>
@@ -65,6 +69,7 @@ const Questionare = () => {
 					<QuizCheckWrapper
 						questionWithAnswer={questionWithAnswer}
 						score={score}
+						retakeTest={retakeTest}
 					/>
 				)}
 			</div>
