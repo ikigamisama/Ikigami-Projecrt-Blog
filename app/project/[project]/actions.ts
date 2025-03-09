@@ -16,9 +16,7 @@ export const setupQuiz = async (category: string, question_num: number) => {
 			question_num,
 		);
 
-		if (error) {
-			return { error: true, message: error.message };
-		}
+		if (error) return { error: true, message: error.message };
 
 		return { data };
 	} catch (error) {
