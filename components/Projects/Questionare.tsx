@@ -11,6 +11,7 @@ import { setupQuiz, submitQuiz } from "@/app/project/[project]/actions";
 import QuizWrapper from "../QuizWrapper";
 import QuizCheckWrapper from "../QuizCheckWrapper";
 import QuestionWrapper from "../QuestionWrapper";
+import LoadingBlogList from "../LoadingBlogList";
 
 const Questionare = () => {
 	const [questions, setQuestion] = useState<
@@ -26,6 +27,7 @@ const Questionare = () => {
 		category: string,
 		question_num: string,
 	) => {
+		setCurrentQuizEvent("loading");
 		const result = await setupQuiz(category, parseInt(question_num));
 
 		const questionFormatResult = result.data?.map((item) => ({
@@ -40,6 +42,7 @@ const Questionare = () => {
 	};
 
 	const submitAnswer = async (answer: SubmitAnswerData[]) => {
+		setCurrentQuizEvent("loading");
 		const result = await submitQuiz(answer);
 		setQuestionWithAnswer(result.data);
 		setCurrentQuizEvent("submit_answer");
@@ -47,6 +50,7 @@ const Questionare = () => {
 	};
 
 	const retakeTest = () => {
+		setCurrentQuizEvent("loading");
 		setCurrentQuizEvent("setup");
 	};
 
@@ -57,6 +61,8 @@ const Questionare = () => {
 					className={`text-2xl sm:text-4xl font-bold mb-12 ${space_mono.className}`}>
 					Question Interviews
 				</h1>
+
+				{currentQuizEvent == "loading" && <LoadingBlogList />}
 
 				{currentQuizEvent == "setup" && (
 					<QuestionWrapper setCategory={setCategoryQuestion} />
